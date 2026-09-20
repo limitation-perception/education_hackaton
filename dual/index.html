@@ -1,0 +1,911 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>">
+<meta name="color-scheme" content="light dark">
+<title>ЄУніверситет у Дії — клікабельний прототип</title>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+--page:#D9DBDF;--bg:#E9EBEE;--card:#FFFFFF;--ink:#0B0B0C;--muted:#5F6570;--line:#E3E5E8;--chip:#E9EBEE;
+--btn:#0B0B0C;--btn-ink:#FFFFFF;--btn2:#FFFFFF;--btn2-ink:#0B0B0C;
+--t-blue:#DCE7FA;--t-pink:#F8DFE6;--t-green:#DFF1E2;--t-yellow:#F8EDCB;--yink:#4A3B0F;
+--stu:#D6E4F7;--stu-ink:#33475F;
+--ok-bg:#E1F3E8;--ok-ink:#17643A;--ok:#1E8E4E;--warn-bg:#FFF1D6;--warn-ink:#6B4300;--warn:#C98A00;
+--seg:#D9D9DE;--seg-ink:#33353A;--promo:#0B0B0C;--promo-ink:#FFFFFF;--promo-muted:#D0D3D9;--danger:#B3261E;
+}
+@media (prefers-color-scheme: dark){
+:root:not([data-theme="light"]){
+--page:#000000;--bg:#111214;--card:#1C1D20;--ink:#F2F3F5;--muted:#A3A8B1;--line:#2C2E33;--chip:#2A2C31;
+--btn:#F2F3F5;--btn-ink:#0B0B0C;--btn2:#26282C;--btn2-ink:#F2F3F5;
+--t-blue:#24344F;--t-pink:#4A2A35;--t-green:#24402B;--t-yellow:#4A4020;--yink:#F2DFA6;
+--stu:#22344D;--stu-ink:#B9CCE4;
+--ok-bg:#153A28;--ok-ink:#86D9A8;--ok:#2FB36B;--warn-bg:#4A3812;--warn-ink:#F2C879;--warn:#E0A526;
+--seg:#26282C;--seg-ink:#C7CAD0;--promo:#F2F3F5;--promo-ink:#0B0B0C;--promo-muted:#3D4148;--danger:#FF8A80;
+}
+}
+:root[data-theme="dark"]{
+--page:#000000;--bg:#111214;--card:#1C1D20;--ink:#F2F3F5;--muted:#A3A8B1;--line:#2C2E33;--chip:#2A2C31;
+--btn:#F2F3F5;--btn-ink:#0B0B0C;--btn2:#26282C;--btn2-ink:#F2F3F5;
+--t-blue:#24344F;--t-pink:#4A2A35;--t-green:#24402B;--t-yellow:#4A4020;--yink:#F2DFA6;
+--stu:#22344D;--stu-ink:#B9CCE4;
+--ok-bg:#153A28;--ok-ink:#86D9A8;--ok:#2FB36B;--warn-bg:#4A3812;--warn-ink:#F2C879;--warn:#E0A526;
+--seg:#26282C;--seg-ink:#C7CAD0;--promo:#F2F3F5;--promo-ink:#0B0B0C;--promo-muted:#3D4148;--danger:#FF8A80;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--page);color:var(--ink);font-family:'Onest','Segoe UI',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.app{max-width:430px;margin:0 auto;min-height:100vh;background:var(--bg);display:flex;flex-direction:column}
+@media (min-width:560px){.app{border-left:1px solid var(--line);border-right:1px solid var(--line)}}
+.screen{flex-grow:1;display:flex;flex-direction:column;gap:20px;padding:28px 24px 32px}
+.head{display:flex;flex-direction:column;gap:16px}
+.hgroup{display:flex;flex-direction:column;gap:8px}
+.h1{margin:0;font-size:32px;line-height:40px;font-weight:700;letter-spacing:-.5px}
+.h1.m{font-size:30px;line-height:38px}
+.h2{margin:4px 0 0;font-size:20px;line-height:26px;font-weight:700}
+.h3{margin:0;font-size:18px;line-height:24px;font-weight:700}
+.sub{font-size:15px;line-height:22px;color:var(--muted)}
+.small{font-size:13px;line-height:18px;color:var(--muted)}
+.lbl{font-size:14px;line-height:20px;font-weight:600;color:var(--muted)}
+.back{width:44px;height:44px;border-radius:22px;border:0;background:var(--card);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--ink)}
+.card{background:var(--card);border-radius:24px}
+.cl{background:var(--card);border-radius:28px;padding:20px}
+.gap8{display:flex;flex-direction:column;gap:8px}
+.gap10{display:flex;flex-direction:column;gap:10px}
+.gap12{display:flex;flex-direction:column;gap:12px}
+.gap14{display:flex;flex-direction:column;gap:14px}
+.gap16{display:flex;flex-direction:column;gap:16px}
+.foot{margin-top:auto;display:flex;flex-direction:column;gap:12px}
+.search{height:52px;background:var(--card);border-radius:20px;display:flex;align-items:center;gap:12px;padding:0 16px;color:var(--muted)}
+.search input{border:0;outline:0;background:transparent;font:inherit;font-size:16px;color:var(--ink);flex:1;min-width:0}
+.promo{display:block;width:100%;text-align:left;border:0;background:var(--promo);color:var(--promo-ink);border-radius:28px;padding:24px}
+.promo .badge{display:inline-block;background:var(--promo-ink);color:var(--promo);font-size:12px;line-height:16px;font-weight:600;padding:6px 10px;border-radius:12px}
+.promo .pt{font-size:28px;line-height:34px;font-weight:700;letter-spacing:-.5px;margin-top:16px}
+.promo .pd{font-size:16px;line-height:24px;color:var(--promo-muted);margin-top:8px}
+.promo .go{margin-top:20px;height:52px;border-radius:18px;background:var(--promo-ink);color:var(--promo);display:flex;align-items:center;justify-content:center;font-weight:600}
+.list{background:var(--card);border-radius:24px;padding:4px 16px}
+.li{display:flex;align-items:center;gap:14px;height:64px;border:0;border-bottom:1px solid var(--line);background:transparent;width:100%;text-align:left}
+.li:last-child{border-bottom:0}
+.li .tx{flex:1;font-size:16px;font-weight:600}
+.li .mut{color:var(--muted);display:flex}
+.tile{width:48px;height:48px;border-radius:16px;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#0B0B0C;font-size:20px;font-weight:700}
+.tile.s{width:44px;height:44px;border-radius:14px}
+.t-blue{background:var(--t-blue)}.t-pink{background:var(--t-pink)}.t-green{background:var(--t-green)}.t-yellow{background:var(--t-yellow)}
+:root[data-theme="dark"] .tile{color:#F2F3F5}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .tile{color:#F2F3F5}}
+.lrow{display:flex;align-items:center;gap:14px;width:100%;border:0;background:var(--card);border-radius:24px;padding:16px;text-align:left}
+.lrow .tx{flex:1;display:flex;flex-direction:column;gap:2px}
+.lrow .tt{font-size:17px;line-height:24px;font-weight:600}
+.lrow .ts{font-size:14px;line-height:20px;color:var(--muted)}
+.lrow .mut{color:var(--muted);display:flex}
+.stu{display:flex;flex-direction:column;gap:18px;width:100%;text-align:left;border:0;background:var(--stu);color:var(--ink);border-radius:28px;padding:20px}
+.stu .top{display:flex;justify-content:space-between;align-items:center;font-size:14px;line-height:20px;font-weight:600;color:var(--stu-ink)}
+.stu .wp{display:inline-flex;align-items:center;gap:4px;background:var(--card);color:var(--ink);font-size:12px;line-height:16px;font-weight:600;padding:5px 8px 5px 10px;border-radius:10px}
+.stu .mid{display:flex;gap:16px;align-items:center}
+.stu .ph{width:72px;height:88px;border-radius:16px;background:var(--card);display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700;color:var(--stu-ink);flex-shrink:0}
+.stu .nm{font-size:20px;line-height:26px;font-weight:700}
+.stu .sp{font-size:15px;line-height:21px}
+.stu .cr{font-size:15px;line-height:21px;color:var(--stu-ink)}
+.pill{display:inline-flex;align-items:center;gap:6px;border-radius:12px;padding:6px 10px;font-size:13px;line-height:16px;font-weight:600;align-self:flex-start}
+.pill.ok{background:var(--ok-bg);color:var(--ok-ink)}
+.pill.warn{background:var(--warn-bg);color:var(--warn-ink)}
+.pill.neutral{background:var(--chip);color:var(--ink)}
+.pill.big{border-radius:14px;padding:10px 14px;font-size:14px;line-height:20px}
+.dot{width:8px;height:8px;border-radius:4px;background:var(--ok);display:inline-block;flex-shrink:0}
+.pill.warn .dot{background:var(--warn)}
+.okdot{width:24px;height:24px;border-radius:12px;background:var(--ok);color:#FFFFFF;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ck{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+.ck:last-child{border-bottom:0}
+.ck .b{flex:1;display:flex;flex-direction:column}
+.ck .b span:first-child{font-size:15px;line-height:21px;font-weight:600}
+.ck .b span:last-child{font-size:13px;line-height:18px;color:var(--muted)}
+.ck.slim{height:56px;padding:0}
+.ck.slim .b{flex-direction:row;justify-content:space-between;align-items:center}
+.ck.slim .b span:first-child{font-weight:500}
+.ck.slim .b span:last-child{font-size:13px}
+.btn,.btn2{height:56px;border:0;border-radius:20px;font-size:16px;font-weight:600;width:100%}
+.btn{background:var(--btn);color:var(--btn-ink)}
+.btn2{background:var(--btn2);color:var(--btn2-ink)}
+.btn[disabled]{opacity:.35;cursor:not-allowed}
+.btn.sm,.btn2.sm{height:44px;border-radius:14px;font-size:14px}
+.btn2.mini{height:40px;width:auto;padding:0 16px;border-radius:14px;font-size:14px;background:var(--chip);color:var(--ink)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{height:44px;padding:0 18px;border:0;border-radius:16px;font-size:15px;font-weight:600;background:var(--card);color:var(--ink)}
+.chip.on{background:var(--btn);color:var(--btn-ink)}
+.kv{display:flex;justify-content:space-between;gap:16px;padding:11px 0;border-bottom:1px solid var(--line);font-size:15px;line-height:22px}
+.kv:last-child{border-bottom:0}
+.kv span:first-child{color:var(--muted)}
+.kv span:last-child{font-weight:600;text-align:right}
+.qrbtn{border:0;background:#FFFFFF;border-radius:16px;padding:10px;display:flex}
+.qrbox{display:flex;flex-direction:column;align-items:center;gap:12px;padding-top:4px}
+.qrbox .cap{font-size:14px;line-height:20px;color:var(--muted);text-align:center;max-width:270px}
+.note{display:flex;align-items:flex-start;gap:12px;padding:0 4px;color:var(--muted);font-size:14px;line-height:20px}
+.note svg{flex-shrink:0;margin-top:1px}
+.consent{display:flex;align-items:flex-start;gap:12px;padding:16px;background:var(--card);border-radius:24px}
+.consent input{width:24px;height:24px;margin:0;accent-color:var(--btn);flex-shrink:0}
+.consent label{font-size:15px;line-height:22px}
+.step{display:flex;align-items:center;gap:12px;font-size:15px;line-height:21px;color:var(--muted)}
+.step.on{color:var(--ink);font-weight:600}
+.step .num{width:24px;height:24px;border-radius:12px;background:var(--chip);color:var(--ink);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;flex-shrink:0}
+.step.on .num{background:var(--btn);color:var(--btn-ink)}
+.seg{background:var(--seg);border-radius:18px;padding:4px;display:flex;gap:4px}
+.seg button{flex:1;height:44px;border:0;border-radius:14px;background:transparent;color:var(--seg-ink);font-size:15px;font-weight:600}
+.seg button.on{background:var(--card);color:var(--ink)}
+.active{display:flex;align-items:center;gap:14px;width:100%;border:0;background:var(--promo);color:var(--promo-ink);border-radius:24px;padding:16px;text-align:left}
+.active .tile{background:var(--promo-ink);color:var(--promo)}
+.active .tx{flex:1;display:flex;flex-direction:column;gap:2px}
+.active .a1{font-size:13px;line-height:18px;color:var(--promo-muted)}
+.active .a2{font-size:17px;line-height:24px;font-weight:600}
+.offer{padding:16px;display:flex;flex-direction:column;gap:14px}
+.offer .oh{display:flex;align-items:center;gap:12px}
+.offer .o1{font-size:17px;line-height:24px;font-weight:600}
+.offer .o2{font-size:14px;line-height:20px;color:var(--muted)}
+.tags{display:flex;flex-wrap:wrap;gap:8px}
+.tag{background:var(--chip);border-radius:10px;padding:6px 10px;font-size:13px;line-height:16px;font-weight:500}
+.tag.ok{background:var(--ok-bg);color:var(--ok-ink);font-weight:600}
+.ycard{background:var(--t-yellow);color:var(--yink);border-radius:28px;padding:20px;display:flex;flex-direction:column;gap:14px}
+.ycard .r{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.ycard .r span:first-child{font-size:15px;line-height:22px;font-weight:600}
+.ycard .r span:last-child{font-size:24px;line-height:30px;font-weight:700;color:var(--ink)}
+.bar{height:10px;border-radius:5px;background:var(--card);overflow:hidden}
+.bar i{display:block;height:10px;border-radius:5px;background:var(--ink)}
+.entry{padding:16px;display:flex;flex-direction:column;gap:10px}
+.entry .er{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;font-size:16px;line-height:22px}
+.entry .er b{font-weight:700;flex-shrink:0}
+.entry .er span{font-weight:600}
+.tabs{position:sticky;bottom:0;height:88px;flex-shrink:0;background:var(--card);border-radius:24px 24px 0 0;display:flex;justify-content:space-around;align-items:center;padding:0 16px 12px}
+.tab{border:0;background:transparent;width:88px;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:12px;font-weight:500;color:var(--muted)}
+.tab.on{color:var(--ink);font-weight:600}
+.sw{width:52px;height:32px;border-radius:16px;border:0;background:var(--seg);position:relative;flex-shrink:0}
+.sw i{position:absolute;top:4px;left:4px;width:24px;height:24px;border-radius:12px;background:var(--card);transition:transform .15s}
+.sw[aria-checked="true"]{background:var(--btn)}
+.sw[aria-checked="true"] i{transform:translateX(20px);background:var(--btn-ink)}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);display:flex;align-items:flex-end;justify-content:center;z-index:50}
+.sheet{width:100%;max-width:430px;background:var(--card);border-radius:28px 28px 0 0;padding:24px;display:flex;flex-direction:column;gap:16px;max-height:90vh;overflow:auto}
+.opt{display:flex;align-items:center;gap:12px;width:100%;padding:14px 16px;border-radius:18px;background:var(--bg);border:2px solid transparent;text-align:left;font-size:16px;font-weight:600}
+.opt.on{border-color:var(--ink)}
+.field{display:flex;flex-direction:column;gap:6px}
+.field label{font-size:14px;font-weight:600;color:var(--muted)}
+.field input{height:52px;border-radius:16px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:inherit;font-size:16px;padding:0 14px}
+.err{font-size:13px;line-height:18px;color:var(--danger);min-height:18px}
+.doc{position:fixed;inset:0;z-index:100;background:var(--card);display:flex;align-items:center;justify-content:center}
+.doc h1{margin:0;font-size:clamp(56px,16vw,180px);line-height:1;font-weight:700;letter-spacing:-.03em}
+.doc .back{position:absolute;top:24px;left:24px;background:var(--bg)}
+#toast{position:fixed;left:50%;bottom:110px;transform:translateX(-50%);z-index:80;background:var(--ink);color:var(--bg);padding:12px 18px;border-radius:16px;font-size:14px;line-height:20px;font-weight:600;max-width:calc(100vw - 48px);opacity:0;pointer-events:none;transition:opacity .2s;text-align:center}
+#toast.show{opacity:1}
+#nores{display:none;text-align:center;color:var(--muted);font-size:15px}
+.roles{position:sticky;top:0;z-index:60;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px;padding:10px 12px;background:var(--page);border-bottom:1px solid var(--line)}
+.roles:empty{display:none}
+.roles .rl{font-size:13px;line-height:18px;color:var(--muted);font-weight:600}
+.roles button{height:36px;padding:0 14px;border:0;border-radius:12px;background:var(--card);color:var(--ink);font-size:14px;font-weight:600}
+.roles button.on{background:var(--btn);color:var(--btn-ink)}
+.app.wide{max-width:1040px}
+.portal{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 16px;padding:16px 24px;background:var(--card);border-bottom:1px solid var(--line)}
+.portal .pl{font-size:18px;line-height:24px;font-weight:700}
+.portal .pc{font-size:14px;line-height:20px;color:var(--muted)}
+.biz{display:grid;grid-template-columns:220px minmax(0,1fr);gap:24px;padding:24px;flex-grow:1;align-content:start}
+.bnav{display:flex;flex-direction:column;gap:6px;align-self:start;align-content:flex-start}
+.bnav button{border:0;background:transparent;text-align:left;padding:10px 14px;border-radius:14px;font-size:15px;font-weight:600;color:var(--muted)}
+.bnav button.on{background:var(--card);color:var(--ink)}
+@media (max-width:760px){.biz{grid-template-columns:1fr;padding:16px}.bnav{flex-direction:row;flex-wrap:wrap}}
+.bmain{display:flex;flex-direction:column;gap:20px;min-width:0}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
+.stat{background:var(--card);border:0;border-radius:24px;padding:18px;display:flex;flex-direction:column;gap:6px;text-align:left}
+.stat b{font-size:28px;line-height:34px}
+.stat span{font-size:14px;line-height:20px;color:var(--muted)}
+.row{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.tbl{width:100%;border-collapse:collapse;font-size:15px;line-height:21px}
+.tbl th,.tbl td{text-align:left;vertical-align:top;padding:12px 8px;border-bottom:1px solid var(--line)}
+.tbl tr:last-child td{border-bottom:0}
+.tbl th{font-size:13px;color:var(--muted);font-weight:600}
+.field select{height:52px;border-radius:16px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:inherit;font-size:16px;padding:0 14px}
+.chk{display:flex;align-items:center;gap:10px;font-size:15px;font-weight:600}
+.chk input{width:22px;height:22px;margin:0;accent-color:var(--btn)}
+.cl .chip{background:var(--chip)}
+.cl .chip.on{background:var(--btn);color:var(--btn-ink)}
+.push{background:var(--card);border-radius:24px;padding:16px;display:flex;flex-direction:column;gap:12px;box-shadow:0 6px 20px rgba(0,0,0,.08)}
+.push .pt{display:flex;justify-content:space-between;font-size:13px;line-height:18px;color:var(--muted)}
+.btn.inl,.btn2.inl{width:auto;height:44px;padding:0 18px;border-radius:14px;font-size:14px}
+.btn2.inl{background:var(--chip);color:var(--ink)}
+.okdot.wait{background:var(--chip);color:var(--muted)}
+.doclink{display:inline-flex;align-items:center;gap:6px;align-self:flex-start;border:0;background:var(--chip);color:var(--ink);border-radius:12px;padding:6px 10px;font-size:13px;line-height:18px;font-weight:600;text-align:left}
+.cl .doclink,.card .doclink{background:var(--bg)}
+.docpage{width:100%;max-width:720px;margin:0 auto}
+.ck .doclink{flex-shrink:0}
+a.doclink{text-decoration:none}
+.price{font-size:26px;line-height:32px;font-weight:700}
+.prt{padding:11px 0;border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:2px}
+.prt:last-child{border-bottom:0}
+.prt b{font-size:15px;line-height:22px}
+.prt span{font-size:14px;line-height:20px;color:var(--muted)}
+.sub a{color:var(--ink);font-weight:600}
+.roles .mini-demo{height:30px;padding:0 10px;font-size:12px;background:transparent;border:1px solid var(--line)}
+.app.full{max-width:none;background:var(--page);border:0}
+.demo{display:flex;gap:12px;padding:12px;height:100vh;min-height:560px}
+.demo iframe{border:0;border-radius:24px;background:var(--bg);height:100%}
+/* Дві рівні половини */
+.demo .l,.demo .r{flex:1 1 0;min-width:0}
+@media (max-width:900px){.demo{flex-direction:column;height:auto}.demo iframe{height:760px}.demo .l{width:100%}}
+</style>
+</head>
+<body>
+<nav class="roles" id="roles" aria-label="Роль у демо"></nav>
+<div class="app" id="app"></div>
+<div id="layer"></div>
+<div id="toast" role="status" aria-live="polite"></div>
+<script>
+const svg=(d,s=24,w=1.8)=>`<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${d}</svg>`;
+const ic={
+back:svg('<path d="M15 6l-6 6 6 6"/>',22,2),
+chev:svg('<path d="M9 6l6 6-6 6"/>',20,2),
+chevS:svg('<path d="M9 6l6 6-6 6"/>',14,2.4),
+search:svg('<circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/>',22,2),
+doc:svg('<path d="M7 3h7l4 4v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/><path d="M14 3v4h4M9 12h6M9 16h6"/>'),
+wallet:svg('<rect x="3" y="6" width="18" height="13" rx="3"/><circle cx="12" cy="12.5" r="2.6"/>'),
+case:svg('<rect x="3" y="7" width="18" height="13" rx="3"/><path d="M9 7V5.5A1.5 1.5 0 0 1 10.5 4h3A1.5 1.5 0 0 1 15 5.5V7M3 13h18"/>'),
+cap:svg('<path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11.5V16c0 1.4 2.7 3 6 3s6-1.6 6-3v-4.5"/>'),
+check:svg('<path d="M5 12l4.5 4.5L19 7"/>',14,3.2),
+grid:svg('<rect x="4" y="4" width="6.5" height="6.5" rx="2"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="2"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="2"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="2"/>',26,2),
+card:svg('<rect x="3" y="5" width="18" height="14" rx="3"/><path d="M3 10h18"/>',26,2),
+menu:svg('<path d="M4 7h16M4 12h16M4 17h16"/>',26,2),
+lock:svg('<rect x="5" y="11" width="14" height="9" rx="2.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>',20,2),
+globe:svg('<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/>')
+};
+const QR='M0 0h6v6h-6zM6 0h6v6h-6zM12 0h6v6h-6zM18 0h6v6h-6zM24 0h6v6h-6zM30 0h6v6h-6zM36 0h6v6h-6zM48 0h6v6h-6zM54 0h6v6h-6zM66 0h6v6h-6zM78 0h6v6h-6zM84 0h6v6h-6zM96 0h6v6h-6zM108 0h6v6h-6zM114 0h6v6h-6zM120 0h6v6h-6zM126 0h6v6h-6zM132 0h6v6h-6zM138 0h6v6h-6zM144 0h6v6h-6zM0 6h6v6h-6zM36 6h6v6h-6zM48 6h6v6h-6zM54 6h6v6h-6zM60 6h6v6h-6zM66 6h6v6h-6zM78 6h6v6h-6zM84 6h6v6h-6zM108 6h6v6h-6zM144 6h6v6h-6zM0 12h6v6h-6zM12 12h6v6h-6zM18 12h6v6h-6zM24 12h6v6h-6zM36 12h6v6h-6zM54 12h6v6h-6zM66 12h6v6h-6zM78 12h6v6h-6zM84 12h6v6h-6zM90 12h6v6h-6zM96 12h6v6h-6zM108 12h6v6h-6zM120 12h6v6h-6zM126 12h6v6h-6zM132 12h6v6h-6zM144 12h6v6h-6zM0 18h6v6h-6zM12 18h6v6h-6zM18 18h6v6h-6zM24 18h6v6h-6zM36 18h6v6h-6zM54 18h6v6h-6zM72 18h6v6h-6zM84 18h6v6h-6zM90 18h6v6h-6zM96 18h6v6h-6zM108 18h6v6h-6zM120 18h6v6h-6zM126 18h6v6h-6zM132 18h6v6h-6zM144 18h6v6h-6zM0 24h6v6h-6zM12 24h6v6h-6zM18 24h6v6h-6zM24 24h6v6h-6zM36 24h6v6h-6zM54 24h6v6h-6zM60 24h6v6h-6zM72 24h6v6h-6zM78 24h6v6h-6zM96 24h6v6h-6zM108 24h6v6h-6zM120 24h6v6h-6zM126 24h6v6h-6zM132 24h6v6h-6zM144 24h6v6h-6zM0 30h6v6h-6zM36 30h6v6h-6zM72 30h6v6h-6zM84 30h6v6h-6zM90 30h6v6h-6zM108 30h6v6h-6zM144 30h6v6h-6zM0 36h6v6h-6zM6 36h6v6h-6zM12 36h6v6h-6zM18 36h6v6h-6zM24 36h6v6h-6zM30 36h6v6h-6zM36 36h6v6h-6zM48 36h6v6h-6zM60 36h6v6h-6zM90 36h6v6h-6zM108 36h6v6h-6zM114 36h6v6h-6zM120 36h6v6h-6zM126 36h6v6h-6zM132 36h6v6h-6zM138 36h6v6h-6zM144 36h6v6h-6zM60 42h6v6h-6zM78 42h6v6h-6zM90 42h6v6h-6zM18 48h6v6h-6zM24 48h6v6h-6zM36 48h6v6h-6zM42 48h6v6h-6zM48 48h6v6h-6zM54 48h6v6h-6zM60 48h6v6h-6zM72 48h6v6h-6zM78 48h6v6h-6zM84 48h6v6h-6zM96 48h6v6h-6zM102 48h6v6h-6zM132 48h6v6h-6zM138 48h6v6h-6zM144 48h6v6h-6zM12 54h6v6h-6zM18 54h6v6h-6zM24 54h6v6h-6zM30 54h6v6h-6zM48 54h6v6h-6zM54 54h6v6h-6zM60 54h6v6h-6zM66 54h6v6h-6zM108 54h6v6h-6zM138 54h6v6h-6zM144 54h6v6h-6zM0 60h6v6h-6zM12 60h6v6h-6zM18 60h6v6h-6zM24 60h6v6h-6zM30 60h6v6h-6zM36 60h6v6h-6zM42 60h6v6h-6zM48 60h6v6h-6zM54 60h6v6h-6zM60 60h6v6h-6zM66 60h6v6h-6zM72 60h6v6h-6zM90 60h6v6h-6zM96 60h6v6h-6zM102 60h6v6h-6zM108 60h6v6h-6zM114 60h6v6h-6zM132 60h6v6h-6zM144 60h6v6h-6zM0 66h6v6h-6zM6 66h6v6h-6zM12 66h6v6h-6zM24 66h6v6h-6zM30 66h6v6h-6zM48 66h6v6h-6zM60 66h6v6h-6zM90 66h6v6h-6zM96 66h6v6h-6zM102 66h6v6h-6zM126 66h6v6h-6zM132 66h6v6h-6zM24 72h6v6h-6zM36 72h6v6h-6zM42 72h6v6h-6zM48 72h6v6h-6zM54 72h6v6h-6zM60 72h6v6h-6zM78 72h6v6h-6zM102 72h6v6h-6zM108 72h6v6h-6zM114 72h6v6h-6zM120 72h6v6h-6zM126 72h6v6h-6zM0 78h6v6h-6zM18 78h6v6h-6zM48 78h6v6h-6zM54 78h6v6h-6zM66 78h6v6h-6zM84 78h6v6h-6zM90 78h6v6h-6zM108 78h6v6h-6zM114 78h6v6h-6zM120 78h6v6h-6zM138 78h6v6h-6zM12 84h6v6h-6zM24 84h6v6h-6zM30 84h6v6h-6zM60 84h6v6h-6zM78 84h6v6h-6zM84 84h6v6h-6zM90 84h6v6h-6zM96 84h6v6h-6zM108 84h6v6h-6zM114 84h6v6h-6zM120 84h6v6h-6zM132 84h6v6h-6zM138 84h6v6h-6zM6 90h6v6h-6zM36 90h6v6h-6zM42 90h6v6h-6zM48 90h6v6h-6zM54 90h6v6h-6zM66 90h6v6h-6zM72 90h6v6h-6zM90 90h6v6h-6zM114 90h6v6h-6zM126 90h6v6h-6zM132 90h6v6h-6zM18 96h6v6h-6zM48 96h6v6h-6zM60 96h6v6h-6zM90 96h6v6h-6zM114 96h6v6h-6zM120 96h6v6h-6zM126 96h6v6h-6zM132 96h6v6h-6zM138 96h6v6h-6zM144 96h6v6h-6zM66 102h6v6h-6zM84 102h6v6h-6zM102 102h6v6h-6zM114 102h6v6h-6zM138 102h6v6h-6zM144 102h6v6h-6zM0 108h6v6h-6zM6 108h6v6h-6zM12 108h6v6h-6zM18 108h6v6h-6zM24 108h6v6h-6zM30 108h6v6h-6zM36 108h6v6h-6zM54 108h6v6h-6zM60 108h6v6h-6zM66 108h6v6h-6zM78 108h6v6h-6zM90 108h6v6h-6zM96 108h6v6h-6zM102 108h6v6h-6zM120 108h6v6h-6zM144 108h6v6h-6zM0 114h6v6h-6zM36 114h6v6h-6zM48 114h6v6h-6zM54 114h6v6h-6zM66 114h6v6h-6zM72 114h6v6h-6zM78 114h6v6h-6zM96 114h6v6h-6zM102 114h6v6h-6zM126 114h6v6h-6zM132 114h6v6h-6zM144 114h6v6h-6zM0 120h6v6h-6zM12 120h6v6h-6zM18 120h6v6h-6zM24 120h6v6h-6zM36 120h6v6h-6zM48 120h6v6h-6zM72 120h6v6h-6zM84 120h6v6h-6zM96 120h6v6h-6zM102 120h6v6h-6zM120 120h6v6h-6zM126 120h6v6h-6zM138 120h6v6h-6zM144 120h6v6h-6zM0 126h6v6h-6zM12 126h6v6h-6zM18 126h6v6h-6zM24 126h6v6h-6zM36 126h6v6h-6zM48 126h6v6h-6zM54 126h6v6h-6zM60 126h6v6h-6zM66 126h6v6h-6zM72 126h6v6h-6zM84 126h6v6h-6zM96 126h6v6h-6zM102 126h6v6h-6zM108 126h6v6h-6zM114 126h6v6h-6zM120 126h6v6h-6zM138 126h6v6h-6zM144 126h6v6h-6zM0 132h6v6h-6zM12 132h6v6h-6zM18 132h6v6h-6zM24 132h6v6h-6zM36 132h6v6h-6zM54 132h6v6h-6zM66 132h6v6h-6zM84 132h6v6h-6zM108 132h6v6h-6zM132 132h6v6h-6zM138 132h6v6h-6zM144 132h6v6h-6zM0 138h6v6h-6zM36 138h6v6h-6zM48 138h6v6h-6zM54 138h6v6h-6zM66 138h6v6h-6zM72 138h6v6h-6zM78 138h6v6h-6zM102 138h6v6h-6zM108 138h6v6h-6zM114 138h6v6h-6zM120 138h6v6h-6zM126 138h6v6h-6zM132 138h6v6h-6zM138 138h6v6h-6zM0 144h6v6h-6zM6 144h6v6h-6zM12 144h6v6h-6zM18 144h6v6h-6zM24 144h6v6h-6zM30 144h6v6h-6zM36 144h6v6h-6zM60 144h6v6h-6zM72 144h6v6h-6zM78 144h6v6h-6zM84 144h6v6h-6zM90 144h6v6h-6zM96 144h6v6h-6zM108 144h6v6h-6zM120 144h6v6h-6zM126 144h6v6h-6zM132 144h6v6h-6zM138 144h6v6h-6zM144 144h6v6h-6z';
+const CATS=[
+{t:'Внутрішньо переміщена особа',label:'Статус внутрішньо переміщеної особи',reg:'Реєстр ВПО'},
+{t:'Малозабезпечена сім\'я',label:'Допомога малозабезпеченій сім\'ї',reg:'Система соцзахисту'},
+{t:'Учасник бойових дій або його дитина',label:'Статус учасника бойових дій',reg:'Реєстр ветеранів'},
+{t:'Особа з інвалідністю',label:'Група інвалідності',reg:'Реєстр МСЕК'}
+];
+const OFFERS=[
+{id:'agro',name:'АгроЛогістик',role:'Аналітик даних',letter:'А',tone:'t-green'},
+{id:'media',name:'МедіаХаб',role:'QA-інженер',letter:'М',tone:'t-pink'},
+{id:'desk',name:'СервісДеск',role:'Стажер технічної підтримки',letter:'С',tone:'t-blue'}
+];
+const PLAN=80;
+const COMPANY={name:'ТехноСофт',edrpou:'00000000',kved:'62.01 Комп\'ютерне програмування',signer:'Ігор Іваненко, директор'};
+const MENTORS=[{id:'m1',name:'Петро Сидоренко',pos:'Senior-розробник'},{id:'m2',name:'Ірина Бондар',pos:'QA Lead'}];
+const SPECS=['122 Комп\'ютерні науки','121 Інженерія програмного забезпечення'];
+const OUTCOMES=['Розробка й тестування модулів','Робота з системою контролю версій','Командна робота й код-рев\'ю'];
+const GRADES=['Досягнуто','Частково','Не досягнуто'];
+const OLENA={name:'Олена Мельник',school:'Національний університет «Києво-Могилянська академія»',spec:'122 Комп\'ютерні науки',course:3};
+// Дані НаУКМА з відкритих джерел (перелік — у SOURCES). Чого не знайшли, того не показуємо
+const UNI={name:OLENA.school,short:'НаУКМА'};
+const PROGRAM={name:'Комп\'ютерні науки',faculty:'Факультет інформатики',level:'Бакалавр (перший рівень)',duration:'3 роки 10 місяців',ects:240,form:'Денна',
+budget:true,contractPrice:'100 000 грн на рік',contractNote:'10 000 грн на місяць, навчальний рік — 10 місяців. Вартість для вступу 2026 року; на вступ 2026 — 50 бюджетних і 15 контрактних місць'};
+const ERASMUS={dur:'від 2 до 12 місяців',fund:'Стипендія ЄС на проживання й кошти на дорогу',url:'https://erasmus-plus.ec.europa.eu/'};
+const EXCHANGES=[
+{t:'Двосторонні обміни НаУКМА',dur:'Семестр або рік',fund:'Навчання в партнера без отримання ступеня; умови й фінансування залежать від програми',grant:null},
+{t:'Програми зі ступенем закордонного університету',dur:'Повний термін програми',fund:'Невелика частина програм; наприклад, німецькомовна магістратура з Університетом Єни',grant:null}];
+const PARTNERS=[
+{n:'University of Glasgow',c:'Велика Британія',p:'Партнер з 2008/09; два гранти Erasmus+ ICM; семестр навчання для 100 студентів НаУКМА у 2022/23'},
+{n:'Justus Liebig University Giessen',c:'Німеччина',p:'Угода про обмін з 2012 року, партнерство з 2022 року'},
+{n:'Університет Єни',c:'Німеччина',p:'Німецькомовна магістерська програма'},
+{n:'University of Toronto (CERES)',c:'Канада',p:'Програма обміну студентами'},
+{n:'Université Paris-Est Créteil',c:'Франція',p:'Спільне викладання курсів'}];
+const MOBILITY={email:'int_mobility@ukma.edu.ua',url:'https://dfc.ukma.edu.ua/going-from-naukma/mobility-programs'};
+const SOURCES={program:'vstup.ukma.edu.ua',exchange:'dfc.ukma.edu.ua, gla.ac.uk, uni-giessen.de, uk.wikipedia.org, ukrainet.eu, erasmus-plus.ec.europa.eu'};
+const COUNTRIES=[...new Set(PARTNERS.map(x=>x.c))];
+const RCP_NAMES=['Соцзахист','ТЦК','Банк','Роботодавець'];
+const ACT_MONTH='2026-09';
+const SIGN_LABELS={student:'Студент — Дія.Підпис',parent:'Законний представник — Дія.Підпис',company:'Компанія — КЕП',school:'Заклад освіти — КЕП'};
+const S={rcp:0,cat:0,consent:true,submitted:false,dualTab:0,applied:[],sheet:null,credit:false,last:'#/services',nextId:4,
+bizOffers:[{id:'ts-dev',role:'Молодший розробник',spec:SPECS[0],course:3,places:2,hours:20,paid:true,mentor:'m1',status:'approved',createdAt:'2026-08-18T10:00:00',approvedAt:'2026-08-20T11:00:00'}],
+apps:[
+{id:'a1',offerId:'ts-dev',name:'Андрій Коваль',school:'Інститут «Сула» (прототип)',spec:SPECS[0],course:3,minor:false,status:'new',createdAt:'2026-09-17T12:10:00'},
+{id:'a2',offerId:'ts-dev',name:'Максим Литвин',school:'Фаховий коледж «Псел» (прототип)',spec:SPECS[0],course:3,minor:true,status:'new',createdAt:'2026-09-18T09:40:00'}
+],
+agreements:[{id:'g0',name:'Олена Мельник',school:OLENA.school,offerId:'ts-dev',minor:false,self:true,signs:{student:'2026-08-28T10:15:00',company:'2026-08-28T12:40:00',school:'2026-08-29T09:05:00'}}],
+actSigned:false,assess:[null,null,null],assessSent:false,assessErr:'',submittedAt:null,creditAt:null,creditedAt:null,exchangeApplied:null,events:[],
+entries:[
+{id:1,title:'Налаштування середовища й онбординг',hours:24,ok:true,createdAt:'2026-09-07T19:00:00',confirmedAt:'2026-09-08T18:20:00'},
+{id:2,title:'Інтеграція API оплат',hours:22,ok:true,createdAt:'2026-09-14T19:10:00',confirmedAt:'2026-09-15T17:45:00'},
+{id:3,title:'Тести для модуля звітів',hours:10,ok:false,createdAt:'2026-09-18T20:05:00'}
+]};
+const app=document.getElementById('app');
+const layer=document.getElementById('layer');
+const toastEl=document.getElementById('toast');
+let toastT=null;
+function toast(m){toastEl.textContent=m;toastEl.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>toastEl.classList.remove('show'),2400)}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function isDark(){const t=document.documentElement.dataset.theme;return t?t==='dark':matchMedia('(prefers-color-scheme: dark)').matches}
+const back=to=>`<button class="back" data-go="${to}" aria-label="Назад">${ic.back}</button>`;
+const tabs=a=>`<nav class="tabs" aria-label="Основне меню">
+<button class="tab ${a==='services'?'on':''}" data-go="#/services">${ic.grid}Послуги</button>
+<button class="tab ${a==='documents'?'on':''}" data-go="#/documents">${ic.card}Документи</button>
+<button class="tab ${a==='menu'?'on':''}" data-go="#/menu">${ic.menu}Меню</button></nav>`;
+const stuCard=()=>`<button class="stu" data-go="#/doc/student_card" aria-label="Відкрити студентський квиток">
+<div class="top"><span>Студентський квиток</span><span class="wp">Відкрити ${ic.chevS}</span></div>
+<div class="mid"><div class="ph">ОМ</div><div><div class="nm">Олена Мельник</div><div class="sp">122 Комп'ютерні науки</div><div class="cr">3 курс · денна форма</div></div></div>
+<span class="pill ok big"><i class="dot"></i>Дані підтверджено в реєстрі</span></button>`;
+const okRow=(t,s)=>`<div class="ck"><span class="okdot">${ic.check}</span><div class="b"><span>${t}</span><span>${s}</span></div></div>`;
+const confirmed=()=>S.entries.filter(e=>e.ok).reduce((a,e)=>a+e.hours,0);
+const pending=()=>S.entries.filter(e=>!e.ok);
+const mentorById=id=>{const m=MENTORS.find(x=>x.id===id);if(!m)throw new Error('Невідомий наставник: '+id);return m};
+const offerById=id=>{const o=S.bizOffers.find(x=>x.id===id)||OFFERS.find(x=>x.id===id);if(!o)throw new Error('Невідома пропозиція: '+id);return o};
+const isBizOffer=o=>S.bizOffers.includes(o);
+const signsNeeded=g=>g.minor?['student','parent','company','school']:['student','company','school'];
+const isActive=g=>signsNeeded(g).every(k=>g.signs[k]);
+const studentOffers=()=>[...OFFERS,...S.bizOffers.filter(o=>o.status==='approved'&&!S.agreements.some(g=>g.self&&g.offerId===o.id)).map(o=>({id:o.id,name:COMPANY.name,role:o.role,letter:'Т',tone:'t-blue'}))];
+const waitDot='<span class="okdot wait" aria-hidden="true">·</span>';
+function myStatus(o){
+if(!isBizOffer(o))return '<span class="pill warn"><i class="dot"></i>Очікує відповіді компанії</span>';
+const a=S.apps.find(x=>x.self&&x.offerId===o.id);
+if(!a)throw new Error('Не знайдено заявку на пропозицію '+o.id);
+if(a.status==='new')return '<span class="pill warn"><i class="dot"></i>Очікує відповіді компанії</span>';
+if(a.status==='rejected')return '<span class="pill neutral">Компанія відхилила заявку</span>';
+const g=S.agreements.find(x=>x.appId===a.id);
+if(!g)throw new Error('Не знайдено угоду для заявки '+a.id);
+const link=docLink('#/doc/agreement/'+g.id,'Договір');
+if(!g.signs.student)return `<span class="pill warn"><i class="dot"></i>Компанія прийняла — підпишіть угоду</span>${link}<button class="btn2 mini" data-act="signSelf" data-arg="${g.id}">Підписати Дія.Підписом</button>`;
+return (isActive(g)?'<span class="pill ok"><i class="dot"></i>Активна угода</span>':'<span class="pill warn"><i class="dot"></i>Чекає підписів компанії й закладу</span>')+link;
+}
+function signCell(g,k,viewer='biz'){
+if(g.signs[k])return 'підписано';
+if(viewer==='school')return k==='school'?`<button class="btn2 mini" data-act="sign" data-arg="${g.id}:school">Підписати КЕП</button>`:'очікує';
+if(k==='company')return `<button class="btn2 mini" data-act="sign" data-arg="${g.id}:company">Підписати КЕП</button>`;
+if(k==='school')return 'очікує заклад освіти';
+if(k==='student'&&g.self)return 'очікує в Дії студента';
+const t={student:'Студент підписав (демо)',parent:'Представник підписав (демо)'}[k];
+return `<button class="btn2 mini" data-act="sign" data-arg="${g.id}:${k}">${t}</button>`;
+}
+function curatorPackage(){
+const p=pending();
+const rows=[[`${confirmed()} год підтверджено наставником`,p.length===0,p.length?`${p.length} запис(и) чекають`:'готово','#/doc/act/'+ACT_MONTH],
+['Акт за місяць підписано компанією (КЕП)',!!S.actSigned,S.actSigned?'готово':'очікує','#/doc/act/'+ACT_MONTH],
+['Оцінка результату від компанії',!!S.assessSent,S.assessSent?'готово':'очікує','#/doc/assessment']];
+return rows.map(([t,ok,st,h])=>`<div class="ck">${ok?`<span class="okdot">${ic.check}</span>`:waitDot}<div class="b"><span>${t}</span><span>${st}</span></div>${docLink(h)}</div>`).join('');
+}
+const nowIso=()=>new Date().toISOString();
+const fmt=t=>new Date(t).toLocaleString('uk-UA',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'});
+function docNo(type,id){let h=0;for(const ch of type+'/'+(id||''))h=(h*31+ch.charCodeAt(0))>>>0;return 'ЄС-2026-'+String(h%1000000).padStart(6,'0')}
+const docLink=(hash,label='Документ')=>`<button class="doclink" data-go="${hash}">${svg('<path d="M7 3h7l4 4v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/><path d="M14 3v4h4M9 12h6M9 16h6"/>',16,2)}${label}</button>`;
+const entryById=id=>{const e=S.entries.find(x=>x.id===+id);if(!e)throw new Error('Запис журналу не знайдено: '+id);return e};
+const agreementOfApp=appId=>{const g=S.agreements.find(x=>x.appId===appId);if(!g)throw new Error('Угоду для заявки не знайдено: '+appId);return g};
+const agreementById=id=>{const g=S.agreements.find(x=>x.id===id);if(!g)throw new Error('Угоду не знайдено: '+id);return g};
+const bizOfferById=id=>{const o=S.bizOffers.find(x=>x.id===id);if(!o)throw new Error('Пропозицію не знайдено: '+id);return o};
+const CURRENT='#/doc/agreement/g0';
+const EMPLOYER_RCP=RCP_NAMES.indexOf('Роботодавець');
+// Стик 3 → 1: зарахована дуальна частина стає записом у документах студента
+const dualSummary=()=>`${COMPANY.name}, ${offerById('ts-dev').role}, ${confirmed()} год, зараховано ${fmt(S.creditedAt)}`;
+const appById=id=>{const a=S.apps.find(x=>x.id===id);if(!a)throw new Error('Заявку не знайдено: '+id);return a};
+// Кожен документ: назва, джерело, статус, зміст, підписи (at = дата або null), пов'язані документи
+const DOCS={
+student_card:()=>({title:'Студентський квиток',source:'Дані з ЄДЕБО',ok:true,status:'Чинний',
+fields:[['Здобувач',OLENA.name],['Заклад освіти',OLENA.school],['Спеціальність',OLENA.spec],['Курс',OLENA.course],['Форма навчання','Денна']],
+signs:[{who:'Заклад освіти — запис в ЄДЕБО',how:'Реєстр',at:'2023-09-01T09:00:00'}],
+related:[['#/doc/certificate','Довідка про навчання']]}),
+certificate:()=>({title:'Довідка про навчання',source:'Сформовано з ЄДЕБО на запит',ok:true,status:'Чинна',
+fields:[['Здобувач',OLENA.name],['Спеціальність',OLENA.spec],['Форма','Денна, держзамовлення'],['Призначення',RCP_NAMES[S.rcp]],...(S.creditedAt&&S.rcp===EMPLOYER_RCP?[['Дуальна освіта',dualSummary()]]:[])],
+signs:[{who:'ЄДЕБО — автоматичне підтвердження',how:'Реєстр',at:nowIso()}],
+related:[['#/doc/student_card','Студентський квиток'],...(S.creditedAt?[['#/doc/dual_record','Запис про дуальну освіту']]:[])]}),
+enrollment:id=>{const a=appById(id);return {title:'Підтвердження навчання для роботодавця',source:'ЄДЕБО, автоматично під час подання заявки',ok:true,status:'Навчається · підтверджено реєстром',
+fields:[['Здобувач',a.name+(a.minor?' (до 18 років)':'')],['Заклад освіти',a.school],['Спеціальність',a.spec],['Курс',a.course],['Статус','навчається'],['Отримувач',COMPANY.name]],
+signs:[{who:`${a.name} — згода на передачу даних (Дія)`,at:a.createdAt},{who:'ЄДЕБО — підтвердження статусу',at:a.createdAt}],
+related:[]}},
+dual_record:()=>{if(!S.creditedAt)throw new Error('Дуальну частину ще не зараховано');const lastHours=S.entries.filter(e=>e.ok).map(e=>e.confirmedAt).sort().pop();return {title:'Запис про дуальну освіту',source:'ЄДЕБО, після зарахування куратором',ok:true,status:'Зараховано',
+fields:[['Здобувач',OLENA.name],['Компанія',`${COMPANY.name}, ЄДРПОУ ${COMPANY.edrpou}`],['Посада',offerById('ts-dev').role],['Підтверджено годин',confirmed()],...OUTCOMES.map((t,i)=>[t,S.assess[i]===null?'—':GRADES[S.assess[i]]]),['Зараховано',fmt(S.creditedAt)]],
+signs:[{who:`Наставник ${MENTORS[0].name} — години (Дія)`,at:lastHours},{who:`${COMPANY.name} — акт і оцінка (КЕП)`,at:S.assessSent},{who:'Куратор — зарахування (КЕП)',at:S.creditedAt}],
+related:[[CURRENT,'Договір'],['#/doc/act/'+ACT_MONTH,'Акт за вересень'],['#/doc/assessment','Оцінка семестру'],['#/doc/credit','Витяг для зарахування']]}},
+scholarship:()=>({title:'Заява на соціальну стипендію',source:'Підтвердження з реєстрів',ok:S.submitted,status:S.submitted?'Подано, розглядає деканат':'Чернетка, заяву не подано',
+fields:[['Здобувач',OLENA.name],['Підстава',CATS[S.cat].t],['Денна форма навчання','так · ЄДЕБО'],['Державне замовлення','так · ЄДЕБО'],[CATS[S.cat].label,'так · '+CATS[S.cat].reg],['Особа та РНОКПП','так · Дія']],
+signs:[{who:'Здобувач — Дія.Підпис',how:'Дія.Підпис',at:S.submitted?S.submittedAt:null},{who:'Деканат — КЕП',how:'КЕП',at:null}],
+related:[['#/doc/student_card','Студентський квиток']]}),
+approval:id=>{const o=bizOfferById(id);const m=mentorById(o.mentor);return {title:'Погодження пропозиції дуальної форми',source:'Кафедра закладу освіти',ok:o.status==='approved',status:o.status==='approved'?'Погоджено: робота відповідає освітній програмі':'На погодженні кафедри',
+fields:[['Компанія',`${COMPANY.name}, ЄДРПОУ ${COMPANY.edrpou}`],['Посада',esc(o.role)],['Спеціальність',o.spec],['З курсу',o.course],['Місць',o.places],['Годин на тиждень',o.hours],['Оплата',o.paid?'оплачувана':'без оплати'],['Наставник',`${m.name}, ${m.pos}`]],
+signs:[{who:`${COMPANY.name} — подання (КЕП)`,how:'КЕП',at:o.createdAt},{who:'Кафедра — погодження (КЕП)',how:'КЕП',at:o.approvedAt||null}],
+related:S.agreements.filter(g=>g.offerId===o.id).map(g=>['#/doc/agreement/'+g.id,'Договір: '+g.name])}},
+agreement:id=>{const g=agreementById(id);const o=offerById(g.offerId);const m=mentorById(o.mentor);return {title:'Тристоронній договір про дуальну форму здобуття освіти',source:'Дані сторін з ЄДЕБО та ЄДР',ok:isActive(g),status:isActive(g)?'Чинний':'Очікує підписів',
+fields:[['Здобувач',g.name+(g.minor?' (до 18 років)':'')],['Заклад освіти',g.school],['Компанія',`${COMPANY.name}, ЄДРПОУ ${COMPANY.edrpou}`],['Посада',esc(o.role)],['Годин на тиждень',o.hours],['Наставник',`${m.name}, ${m.pos}`],['Оплата',o.paid?'оплачувана':'без оплати'],['Строк','2026/2027 навчальний рік']],
+signs:signsNeeded(g).map(k=>({who:SIGN_LABELS[k],at:g.signs[k]||null})),
+related:[['#/doc/approval/'+o.id,'Погодження кафедри'],...(g.id==='g0'?[['#/doc/act/'+ACT_MONTH,'Акт за вересень'],['#/doc/assessment','Оцінка семестру']]:[])]}},
+hours:id=>{const e=entryById(id);return {title:'Підтвердження годин наставником',source:'Журнал практики',ok:e.ok,status:e.ok?'Підтверджено':(e.q?'Наставник просить уточнити':'Очікує наставника'),
+fields:[['Здобувач',OLENA.name],['Компанія',COMPANY.name],['Що зроблено',esc(e.title)],['Годин',e.hours],['Договір',docNo('agreement','g0')]],
+signs:[{who:`${OLENA.name} — запис у журналі`,how:'Дія',at:e.createdAt},{who:`Наставник ${MENTORS[0].name} — підтвердження в Дії`,how:'Дія',at:e.ok?e.confirmedAt:null}],
+related:[[CURRENT,'Договір'],['#/doc/act/'+ACT_MONTH,'Акт за вересень']]}},
+act:()=>{const ph=pending().reduce((a,e)=>a+e.hours,0);return {title:'Акт виконаних годин за вересень 2026',source:'Підтвердження наставників',ok:!!S.actSigned,status:S.actSigned?'Підписано, передано закладу':'Очікує підпису компанії',
+fields:[['Компанія',`${COMPANY.name}, ЄДРПОУ ${COMPANY.edrpou}`],['Студентів',1],['Підтверджених годин',confirmed()],['Не увійшли (чекають наставника)',ph?ph+' год':'—']],
+signs:[{who:`${COMPANY.name} — КЕП (${COMPANY.signer})`,at:S.actSigned||null}],
+related:[[CURRENT,'Договір'],...S.entries.filter(e=>e.ok).map(e=>['#/doc/hours/'+e.id,`${esc(e.title)} · ${e.hours} год`])]}},
+assessment:()=>({title:'Оцінка результатів навчання за семестр',source:'Індивідуальний план здобувача',ok:!!S.assessSent,status:S.assessSent?'Надіслано куратору':'Ще не заповнено',
+fields:[['Здобувач',OLENA.name],['Компанія',COMPANY.name],...OUTCOMES.map((t,i)=>[t,S.assess[i]===null?'—':GRADES[S.assess[i]]])],
+signs:[{who:`${COMPANY.name} — КЕП (${COMPANY.signer})`,at:S.assessSent||null}],
+related:[[CURRENT,'Договір'],['#/doc/act/'+ACT_MONTH,'Акт за вересень']]}),
+exchange:()=>({title:'Заявка на участь у програмі обміну',source:'Профіль з ЄДЕБО',ok:!!S.exchangeApplied,status:S.exchangeApplied?'Передано в міжнародний відділ':'Заявку не подано',
+fields:[['Здобувач',OLENA.name],['Університет',UNI.name],['Спеціальність',OLENA.spec],['Курс',OLENA.course],['Програми','Erasmus+ та обміни університету']],
+signs:[{who:`${OLENA.name} — Дія.Підпис`,at:S.exchangeApplied},{who:'Міжнародний відділ — розгляд',at:null}],
+related:[['#/doc/student_card','Студентський квиток']]}),
+credit:()=>({title:'Витяг для зарахування результатів дуальної форми',source:'Пакет документів з ЄУніверситету',ok:!!S.creditedAt,status:S.creditedAt?'Зараховано, передано в ЄДЕБО':S.creditAt?'Куратор перевіряє':'Зарахування ще не запрошено',
+fields:[['Здобувач',OLENA.name],['Заклад освіти',OLENA.school],['Компанія',COMPANY.name],['Підтверджено годин',`${confirmed()} з ${PLAN}`],['Акт за місяць',S.actSigned?'підписано':'не підписано'],['Оцінка компанії',S.assessSent?'надіслано':'немає']],
+signs:[{who:`${OLENA.name} — запит на зарахування (Дія)`,at:S.creditAt},{who:'Куратор — зарахування (КЕП)',at:S.creditedAt}],
+related:[[CURRENT,'Договір'],['#/doc/act/'+ACT_MONTH,'Акт за вересень'],['#/doc/assessment','Оцінка семестру']]})
+};
+function docView(path){
+const [type,id]=path.split('/');
+const build=DOCS[type];
+if(!build)throw new Error('Невідомий тип документа: '+type);
+const d=build(id);
+const no=docNo(type,id);
+return `<div class="screen docpage">
+<div class="head">${back(S.last)}<div class="hgroup"><h1 class="h1 m">${d.title}</h1><div class="sub">№ ${no} · ${d.source}</div></div></div>
+<span class="pill ${d.ok?'ok':'warn'}"><i class="dot"></i>${d.status}</span>
+<div class="cl"><div class="h3">Зміст</div><div>${d.fields.map(([k,v])=>`<div class="kv"><span>${k}</span><span>${v}</span></div>`).join('')}</div></div>
+<div class="cl"><div class="h3">Підписи й підтвердження</div><div>${d.signs.map(x=>`<div class="ck">${x.at?`<span class="okdot">${ic.check}</span>`:waitDot}<div class="b"><span>${x.who}</span><span>${x.at?fmt(x.at):'очікує'}</span></div></div>`).join('')}</div></div>
+${d.related.length?`<div class="cl gap8"><div class="h3">Пов'язані документи</div>${d.related.map(([h,l])=>docLink(h,l)).join('')}</div>`:''}
+<div class="qrbox"><div class="qrbtn"><svg width="150" height="150" viewBox="0 0 150 150" role="img" aria-label="QR-код для перевірки документа"><rect width="150" height="150" fill="#FFFFFF"/><path fill="#0B0B0C" d="${QR}"/></svg></div>
+<div class="cap">Код перевірки ${no}. Перевіряючий бачить дані з реєстрів і журналу, а не файл (прототип)</div></div>
+</div>`;
+}
+function roleOf(r){
+const base=r.startsWith('doc/')?S.last.slice(2):r;
+return base.startsWith('biz')?'biz':base.startsWith('school')?'school':'student';
+}
+// ---- Живе демо: спільний стан у localStorage, усі вкладки/вікна оновлюються миттєво ----
+const FRAME=new URLSearchParams(location.search).get('frame');
+const STORE_KEY='estudent-demo-v1';
+const UI_KEYS=['sheet','dualTab','last','assessErr'];
+function domainOf(o){const d={};for(const k in o)if(!UI_KEYS.includes(k))d[k]=o[k];return d}
+let syncBroken=false;
+function reportSync(err){console.error('Синхронізація між вкладками недоступна:',err);if(!syncBroken){syncBroken=true;toast('Синхронізація між вкладками недоступна: '+err.message)}}
+function save(){try{localStorage.setItem(STORE_KEY,JSON.stringify(domainOf(S)))}catch(err){reportSync(err)}}
+function load(){
+let raw;try{raw=localStorage.getItem(STORE_KEY)}catch(err){reportSync(err);return}
+if(!raw)return;
+try{Object.assign(S,JSON.parse(raw))}catch(err){console.error('Збережений стан демо пошкоджено:',err);toast('Збережений стан демо пошкоджено — починаємо спочатку');try{localStorage.removeItem(STORE_KEY)}catch(e2){reportSync(e2)}}
+}
+// Сповіщення для іншої сторони: показуються у вкладці з відповідною роллю
+function notify(role,text){S.events.push({role,text})}
+function announce(from){const mine=S.events.slice(from).filter(e=>e.role===roleOf(route()));if(mine.length)toast(mine[mine.length-1].text)}
+function startDemoCycle(){try{localStorage.removeItem(STORE_KEY)}catch(err){reportSync(err);return}location.hash='#/demo';location.reload()}
+window.addEventListener('storage',e=>{
+if(e.key!==STORE_KEY)return;
+if(e.newValue===null){location.reload();return}
+// Сторінка #/demo лише тримає два вікна; перемальовувати її — означає перезавантажити обидва
+if(route()==='demo')return;
+const before=S.events.length;
+try{Object.assign(S,JSON.parse(e.newValue))}catch(err){console.error('Не вдалося прочитати стан з іншої вкладки:',err);toast('Не вдалося синхронізуватися з іншою вкладкою');return}
+render();announce(before);
+});
+function demoHtml(){
+const src=(f,h)=>`${location.pathname}?frame=${f}#/${h}`;
+return `<div class="demo"><iframe class="l" title="Дія студента" src="${src('left','student')}"></iframe><iframe class="r" title="Компанія або університет" src="${src('right','biz/apps')}"></iframe></div>`;
+}
+function schoolPage(active,content){
+const n=(k,go,t,c)=>`<button class="${active===k?'on':''}" data-go="${go}">${t}${c?` · ${c}`:''}</button>`;
+const review=S.bizOffers.filter(o=>o.status==='review').length;
+const toSign=S.agreements.filter(g=>!g.signs.school).length;
+const credit=S.credit&&!S.creditedAt?1:0;
+return `<header class="portal"><span class="pl">Кабінет університету</span><span class="pc">${UNI.short} · кафедра інформатики · вхід з КЕП (прототип; у реальності — система закладу та ЄДЕБО)</span></header>
+<div class="biz"><nav class="bnav" aria-label="Кабінет закладу">
+${n('home','#/school','Огляд')}${n('offers','#/school/offers','Погодження пропозицій',review)}${n('agr','#/school/agreements','Угоди на підпис',toSign)}${n('credit','#/school/credit','Зарахування',credit)}
+</nav><main class="bmain">${content}</main></div>`;
+}
+function rolesHtml(r){
+if(r==='demo'||FRAME==='left')return '';
+const role=roleOf(r);
+const b=(k,go,t)=>`<button class="${role===k?'on':''}" aria-pressed="${role===k}" data-go="${go}">${t}</button>`;
+if(FRAME==='right')return `${b('biz','#/biz','Компанія')}${b('school','#/school','Університет')}`;
+return `<span class="rl">Прототип, не офіційний сервіс Дії · роль:</span>${b('student','#/student','Студент')}${b('biz','#/biz','Компанія')}${b('school','#/school','Університет')}<button class="mini-demo" data-act="demoCycle">Демо циклу</button>`;
+}
+function bizPage(active,content){
+const n=(k,go,t,c)=>`<button class="${active===k?'on':''}" data-go="${go}">${t}${c?` · ${c}`:''}</button>`;
+const newApps=S.apps.filter(a=>a.status==='new').length;
+const toSign=S.agreements.filter(g=>!isActive(g)).length;
+return `<header class="portal"><span class="pl">Дія · Кабінет бізнесу</span><span class="pc">${COMPANY.name} · ЄДРПОУ ${COMPANY.edrpou} · вхід з КЕП юрособи (прототип)</span></header>
+<div class="biz"><nav class="bnav" aria-label="Кабінет компанії">
+${n('home','#/biz','Огляд')}${n('offers','#/biz/offers','Пропозиції')}${n('apps','#/biz/apps','Заявки',newApps)}${n('agr','#/biz/agreements','Угоди',toSign)}${n('hours','#/biz/hours','Години й акти',pending().length)}${n('assess','#/biz/assess','Оцінка семестру')}
+</nav><main class="bmain">${content}</main></div>`;
+}
+
+const R={
+services(){return `<div class="screen">
+<h1 class="h1">Послуги</h1>
+<label class="search">${ic.search}<input id="q" type="search" placeholder="Пошук послуг" aria-label="Пошук послуг"></label>
+<button class="promo" data-go="#/student" data-search="єуніверситет єстудент університет студент довідки стипендія дуальна освіта">
+<span class="badge">Нова послуга</span><div class="pt">ЄУніверситет</div>
+<div class="pd">Довідки, соціальна стипендія та дуальна освіта — без паперів і черг</div>
+<div class="go">Відкрити</div></button>
+<div class="list">
+<button class="li" data-act="stub" data-search="освіта"><span class="tile s t-blue">${ic.cap}</span><span class="tx">Освіта</span><span class="mut">${ic.chev}</span></button>
+<button class="li" data-act="stub" data-search="соціальна допомога"><span class="tile s t-pink">${ic.wallet}</span><span class="tx">Соціальна допомога</span><span class="mut">${ic.chev}</span></button>
+<button class="li" data-act="stub" data-search="бізнес"><span class="tile s t-yellow">${ic.case}</span><span class="tx">Бізнес</span><span class="mut">${ic.chev}</span></button>
+</div>
+<div id="nores">Нічого не знайдено</div>
+</div>${tabs('services')}`},
+documents(){return `<div class="screen">
+<h1 class="h1">Документи</h1>
+${stuCard()}
+<button class="lrow" data-go="#/certificate"><span class="tile t-blue">${ic.doc}</span><span class="tx"><span class="tt">Довідки ЄУніверситет</span><span class="ts">Сформувати довідку про навчання</span></span><span class="mut">${ic.chev}</span></button>
+${S.creditedAt?`<button class="lrow" data-go="#/doc/dual_record"><span class="tile t-yellow">${ic.case}</span><span class="tx"><span class="tt">Дуальна освіта</span><span class="ts">${dualSummary()}</span></span><span class="mut">${ic.chev}</span></button>`:''}
+</div>${tabs('documents')}`},
+menu(){const d=isDark();return `<div class="screen">
+<h1 class="h1">Меню</h1>
+<div class="list">
+<button class="li" data-act="stub"><span class="tx">Профіль</span><span class="mut">${ic.chev}</span></button>
+<button class="li" data-act="stub"><span class="tx">Налаштування</span><span class="mut">${ic.chev}</span></button>
+<button class="li" data-act="stub"><span class="tx">Допомога</span><span class="mut">${ic.chev}</span></button>
+<div class="li"><span class="tx" id="thm">Темна тема</span><button class="sw" role="switch" aria-checked="${d}" aria-labelledby="thm" data-act="theme"><i></i></button></div>
+</div>
+</div>${tabs('menu')}`},
+student(){return `<div class="screen">
+<div class="head">${back('#/services')}<h1 class="h1">ЄУніверситет</h1></div>
+${stuCard()}
+<h2 class="h2">Моє навчання</h2>
+<div class="gap12">
+<button class="lrow" data-go="#/program"><span class="tile t-blue">${ic.doc}</span><span class="tx"><span class="tt">Моя освітня програма</span><span class="ts">${OLENA.spec} · ${PROGRAM.budget?'бюджет':'контракт'}</span></span><span class="mut">${ic.chev}</span></button>
+<button class="lrow" data-go="#/exchange"><span class="tile t-pink">${ic.globe}</span><span class="tx"><span class="tt">Обмін та міжнародні програми</span><span class="ts">Erasmus+, партнери, гранти</span></span><span class="mut">${ic.chev}</span></button>
+</div>
+<h2 class="h2">Що потрібно?</h2>
+<div class="gap12">
+<button class="lrow" data-go="#/certificate"><span class="tile t-blue">${ic.doc}</span><span class="tx"><span class="tt">Довідки</span><span class="ts">Про навчання та форму фінансування</span></span><span class="mut">${ic.chev}</span></button>
+<button class="lrow" data-go="#/scholarship"><span class="tile t-pink">${ic.wallet}</span><span class="tx"><span class="tt">Соціальна стипендія</span><span class="ts">${S.submitted?'Заява на розгляді':'Заявка без паперових копій'}</span></span><span class="mut">${ic.chev}</span></button>
+<button class="lrow" data-go="#/dual"><span class="tile t-yellow">${ic.case}</span><span class="tx"><span class="tt">Дуальна освіта</span><span class="ts">Пропозиції, угода, журнал практики</span></span><span class="mut">${ic.chev}</span></button>
+</div>
+<h2 class="h2">Ваші підтвердження</h2>
+<div class="list">
+<div class="ck slim"><span class="okdot">${ic.check}</span><div class="b"><span>Навчання за денною формою</span><span>ЄДЕБО</span></div></div>
+<div class="ck slim"><span class="okdot">${ic.check}</span><div class="b"><span>Державне замовлення</span><span>ЄДЕБО</span></div></div>
+<div class="ck slim"><span class="okdot">${ic.check}</span><div class="b"><span>Особа та РНОКПП</span><span>Дія</span></div></div>
+${S.creditedAt?`<div class="ck slim"><span class="okdot">${ic.check}</span><div class="b"><span>Дуальна освіта зарахована</span><span>ЄДЕБО</span></div></div>`:''}
+</div></div>`},
+certificate(){const names=RCP_NAMES;return `<div class="screen">
+<div class="head">${back('#/student')}<div class="hgroup"><h1 class="h1 m">Довідка про навчання</h1><div class="sub">Сформована зараз із реєстру ЄДЕБО за вашою згодою</div></div></div>
+<div class="gap10"><div class="lbl">Для кого довідка</div>
+<div class="chips">${names.map((n,i)=>`<button class="chip ${i===S.rcp?'on':''}" data-act="rcp" data-arg="${i}" aria-pressed="${i===S.rcp}">${n}</button>`).join('')}</div></div>
+<div class="cl gap16">
+<div style="display:flex;justify-content:space-between;align-items:center"><div class="h3">Довідка про навчання</div><span class="pill ok"><i class="dot"></i>Чинна</span></div>
+<div>
+<div class="kv"><span>Здобувач</span><span>Олена Мельник</span></div>
+<div class="kv"><span>Спеціальність</span><span>122 Комп'ютерні науки</span></div>
+<div class="kv"><span>Форма</span><span>Денна, держзамовлення</span></div>
+<div class="kv"><span>Призначення</span><span>${names[S.rcp]}</span></div>
+${S.creditedAt&&S.rcp===EMPLOYER_RCP?`<div class="kv"><span>Дуальна освіта</span><span>${dualSummary()}</span></div>`:''}
+</div>
+${S.creditedAt?`<div class="small">${S.rcp===EMPLOYER_RCP?'Роботодавець бачить ваш досвід дуальної освіти, підтверджений компанією й університетом':'Досвід дуальної освіти додається лише до довідки для роботодавця'}</div>`:''}
+<div class="qrbox">
+<button class="qrbtn" data-go="#/doc/certificate" aria-label="Відкрити довідку"><svg width="150" height="150" viewBox="0 0 150 150" role="img" aria-label="QR-код для перевірки довідки"><rect width="150" height="150" fill="#FFFFFF"/><path fill="#0B0B0C" d="${QR}"/></svg></button>
+<div class="cap">Запитувач сканує код і бачить підтвердження в реєстрі, а не файл</div>
+<button class="btn2 mini" data-go="#/doc/certificate">Відкрити довідку</button>
+</div></div>
+<div class="note">${ic.lock}<span>Запитувач бачить лише те, що потрібно для його рішення: статус, форму й строк навчання</span></div>
+<div class="foot">
+<button class="btn" data-act="share">Поділитися довідкою</button>
+<button class="btn2" data-go="#/doc/certificate">Роздрукувати з QR-кодом</button>
+</div></div>`},
+scholarship(){
+if(S.submitted){return `<div class="screen">
+<div class="head">${back('#/student')}<div class="hgroup"><h1 class="h1 m">Соціальна стипендія</h1><div class="sub">Заява на розгляді в деканаті</div></div></div>
+<div class="cl gap14">
+<span class="okdot" style="width:40px;height:40px;border-radius:20px">${ic.check}</span>
+<div class="h3">Заяву подано</div>
+<div class="sub">Деканат отримав заяву разом із підтвердженнями з реєстрів. Підстава: ${CATS[S.cat].t}</div>
+<div class="gap14">
+<div class="step on"><span class="okdot">${ic.check}</span>Ви подали заяву</div>
+<div class="step on"><span class="num">2</span>Деканат перевіряє й підписує</div>
+<div class="step"><span class="num">3</span>Заклад видає наказ</div>
+<div class="step"><span class="num">4</span>Виплата, а підтвердження оновлюється саме</div>
+</div></div>
+<div class="foot">
+<button class="btn" data-go="#/doc/scholarship">Відкрити заяву</button>
+<button class="btn2" data-act="cancelApp">Скасувати заяву</button>
+</div></div>`}
+const c=CATS[S.cat];
+return `<div class="screen">
+<div class="head">${back('#/student')}<div class="hgroup"><h1 class="h1 m">Соціальна стипендія</h1><div class="sub">Підтвердження підтягуються з реєстрів, копії документів не потрібні</div></div></div>
+<div class="card" style="padding:16px;display:flex;align-items:center;gap:12px">
+<div style="flex:1;display:flex;flex-direction:column;gap:2px"><span class="small" style="font-weight:600">Підстава</span><span style="font-size:17px;line-height:24px;font-weight:600">${c.t}</span></div>
+<button class="btn2 mini" data-act="sheet" data-arg="cat">Змінити</button></div>
+<div class="cl" style="padding-bottom:12px"><div class="h3" style="margin-bottom:8px">Підтверджуємо автоматично</div>
+${okRow('Денна форма навчання','Реєстр ЄДЕБО')}
+${okRow('Навчання за державним замовленням','Реєстр ЄДЕБО')}
+${okRow(c.label,c.reg)}
+${okRow('Особа та РНОКПП','Дія')}</div>
+<div class="consent"><input id="consent" type="checkbox" ${S.consent?'checked':''}><label for="consent">Погоджуюсь, щоб заклад перевірив ці статуси в реєстрах. Заклад бачить лише відповідь «так» або «ні»</label></div>
+<div class="cl gap14"><div class="h3">Що буде далі</div>
+<div class="step on"><span class="num">1</span>Ви подаєте заяву</div>
+<div class="step"><span class="num">2</span>Деканат перевіряє й підписує</div>
+<div class="step"><span class="num">3</span>Заклад видає наказ</div>
+<div class="step"><span class="num">4</span>Виплата, а підтвердження оновлюється саме</div></div>
+<div class="foot">
+<button class="btn" data-act="submit" ${S.consent?'':'disabled'}>Подати заяву</button>
+<div class="small" style="text-align:center">${S.consent?'Немає смартфона чи зв\'язку? Заяву можна подати в закладі з оператором':'Щоб подати заяву, потрібна ваша згода'}</div>
+</div></div>`},
+dual(){
+const head=`<div class="head">${back('#/student')}<div class="hgroup"><h1 class="h1">Дуальна освіта</h1><div class="sub">Навчання й робота одночасно, з обліком у програмі</div></div></div>
+<div class="seg" role="tablist"><button role="tab" class="${S.dualTab===0?'on':''}" aria-selected="${S.dualTab===0}" data-act="dualTab" data-arg="0">Пропозиції</button><button role="tab" class="${S.dualTab===1?'on':''}" aria-selected="${S.dualTab===1}" data-act="dualTab" data-arg="1">Мої угоди</button></div>`;
+if(S.dualTab===0){return `<div class="screen">${head}
+<button class="active" data-go="#/journal"><span class="tile">Т</span><span class="tx"><span class="a1">Активна угода</span><span class="a2">ТехноСофт · Журнал практики</span></span>${ic.chev}</button>
+<div class="gap8"><h2 class="h2" style="margin:0">Для вашої спеціальності</h2><div class="sub" style="font-size:14px;line-height:20px">122 Комп'ютерні науки · 3 курс. Профіль беремо з ЄДЕБО</div></div>
+<div class="gap12">${studentOffers().map(o=>`<div class="card offer"><div class="oh"><span class="tile ${o.tone}">${o.letter}</span><div><div class="o1">${esc(o.role)}</div><div class="o2">${o.name}</div></div></div>
+<div class="tags"><span class="tag">Оплачувана</span><span class="tag">Дуальна форма</span><span class="tag ok">Збігається зі спеціальністю</span></div>
+${S.applied.includes(o.id)?'<span class="pill ok"><i class="dot"></i>Заявку надіслано</span>':`<button class="btn2 mini" style="align-self:flex-start" data-act="sheet" data-arg="apply" data-id="${o.id}">Подати заявку</button>`}</div>`).join('')}</div>
+<div class="small" style="text-align:center;padding:0 8px;margin-top:auto">Компанії й пропозиції на екрані — приклад. Угода підписується через Дія.Підпис усіма сторонами</div>
+</div>`}
+const ap=S.applied.map(offerById);
+return `<div class="screen">${head}
+<div class="card offer"><div class="oh"><span class="tile t-blue">Т</span><div><div class="o1">Молодший розробник</div><div class="o2">ТехноСофт</div></div></div>
+<div class="tags"><span class="pill ok"><i class="dot"></i>Активна угода</span></div>
+<div class="gap8"><button class="btn sm" data-go="#/journal">Журнал практики</button><button class="btn2 sm" style="background:var(--chip)" data-go="#/doc/agreement/g0">Відкрити угоду</button></div></div>
+${ap.map(o=>{const b=isBizOffer(o);return `<div class="card offer"><div class="oh"><span class="tile ${b?'t-blue':o.tone}">${b?'Т':o.letter}</span><div><div class="o1">${esc(o.role)}</div><div class="o2">${b?COMPANY.name:o.name}</div></div></div>
+<div class="tags">${myStatus(o)}</div></div>`}).join('')}
+${ap.length?'':'<div class="sub" style="text-align:center">Надіслані заявки з\'являться тут</div>'}
+</div>`},
+journal(){const c=confirmed();const pct=Math.min(100,Math.round(c/PLAN*100));return `<div class="screen">
+<div class="head">${back('#/dual')}<div class="hgroup"><h1 class="h1">Журнал практики</h1><div class="sub">ТехноСофт · Молодший розробник</div></div></div>
+<div class="ycard"><div class="r"><span>Підтверджено наставником</span><span>${c} / ${PLAN} год</span></div>
+<div class="bar" role="progressbar" aria-valuenow="${c}" aria-valuemin="0" aria-valuemax="${PLAN}" aria-label="Підтверджені години"><i style="width:${pct}%"></i></div>
+<div class="small" style="color:var(--yink)">Цифри для прикладу. План годин береться з навчального плану</div></div>
+<h2 class="h2">Записи</h2>
+<div class="gap12">${S.entries.slice().reverse().map(e=>`<div class="card entry"><div class="er"><span>${esc(e.title)}</span><b>${e.hours} год</b></div>
+${e.ok?'<span class="pill ok"><i class="dot"></i>Підтвердив наставник</span>'+docLink('#/doc/hours/'+e.id,'Підтвердження наставника'):(e.q?'<span class="pill warn"><i class="dot"></i>Наставник просить уточнити</span>':'<span class="pill warn"><i class="dot"></i>Очікує наставника</span>')+'<div class="small">Наставнику надіслано сповіщення в Дії</div>'}</div>`).join('')}</div>
+${pending().length?'<button class="btn2" data-go="#/biz/hours">Що бачить наставник (демо)</button>':''}
+<div class="cl gap10"><div class="h3">Куратор від закладу</div>
+<div class="sub">Бачить лише винятки: непідтверджені години й відхилення від плану. Зарахування відбувається після підтвердження годин і результату.</div>
+<div>${curatorPackage()}</div>
+${S.creditedAt?'<span class="pill ok"><i class="dot"></i>Зараховано куратором · передано в ЄДЕБО</span>':S.credit?'<span class="pill ok"><i class="dot"></i>Зарахування запрошено, куратор перевіряє</span>':'<span class="pill neutral">Зарахування ще не запрошено</span>'}</div>
+<div class="foot">
+<button class="btn" data-act="sheet" data-arg="entry">Додати запис</button>
+${S.creditedAt?'<button class="btn" data-act="shareDual">Поділитися досвідом з роботодавцем</button>':''}
+${S.credit?'<button class="btn2" data-go="#/doc/credit">Відкрити витяг для зарахування</button>':'<button class="btn2" data-act="credit">Запросити зарахування</button>'}
+</div></div>`},
+program(){return `<div class="screen">
+<div class="head">${back('#/student')}<div class="hgroup"><h1 class="h1 m">Моя освітня програма</h1><div class="sub">Дані з ЄДЕБО та сайту вступу НаУКМА</div></div></div>
+<div class="cl gap10"><div class="h3">${OLENA.spec}</div><div class="sub">Освітня програма «${PROGRAM.name}» · ${PROGRAM.faculty}</div>
+${PROGRAM.budget?'<span class="pill ok"><i class="dot"></i>Бюджет (державне замовлення) · підтверджено ЄДЕБО</span>':'<span class="pill neutral">Контракт</span>'}</div>
+<div class="cl"><div class="kv"><span>Рівень освіти</span><span>${PROGRAM.level}</span></div>
+<div class="kv"><span>Тривалість</span><span>${PROGRAM.duration}<span class="small" style="display:block;font-weight:400">${PROGRAM.ects} кредитів ЄКТС за стандартом бакалавра</span></span></div>
+<div class="kv"><span>Курс</span><span>${OLENA.course}</span></div><div class="kv"><span>Форма навчання</span><span>${PROGRAM.form}</span></div>
+<div class="kv"><span>Фінансування</span><span>${PROGRAM.budget?'бюджет':'контракт'}</span></div></div>
+<div class="cl gap8"><div class="h3">Вартість контракту</div><div class="price">${PROGRAM.contractPrice}</div>
+<div class="sub">${PROGRAM.contractNote}.${PROGRAM.budget?' Вас не стосується: ви навчаєтесь за бюджетом.':''}</div></div>
+<div class="cl gap8"><div class="h3">Документи</div>${docLink('#/doc/student_card','Студентський квиток')}${docLink('#/doc/certificate','Довідка про навчання')}</div>
+<div class="small" style="text-align:center">Джерело: ${SOURCES.program}</div>
+</div>`},
+exchange(){return `<div class="screen">
+<div class="head">${back('#/student')}<div class="hgroup"><h1 class="h1 m">Обмін та міжнародні програми</h1><div class="sub">Можливості для студентів ${UNI.short}</div></div></div>
+<div class="cl gap10"><div class="row"><span class="pill ok"><i class="dot"></i>Є грант</span></div><div class="h3">Erasmus+</div>
+<div class="sub">Навчання семестр або рік в університеті-партнері в ЄС. Кредити зараховуються за навчальною угодою (Learning Agreement)</div>
+<div><div class="kv"><span>Тривалість</span><span>${ERASMUS.dur}</span></div><div class="kv"><span>Фінансування</span><span>${ERASMUS.fund}</span></div></div>
+<a class="doclink" href="${ERASMUS.url}" target="_blank" rel="noopener">Офіційний сайт Erasmus+ ↗</a></div>
+<h2 class="h2">Інші програми обміну</h2>
+<div class="gap12">${EXCHANGES.map(x=>`<div class="card offer"><div class="o1">${x.t}</div>
+<div><div class="kv"><span>Тривалість</span><span>${x.dur}</span></div><div class="kv"><span>Умови</span><span>${x.fund}</span></div></div>
+${x.grant===true?'<span class="pill ok"><i class="dot"></i>Є грант</span>':x.grant===false?'<span class="pill neutral">Без гранту</span>':'<span class="pill neutral">Фінансування залежить від програми</span>'}</div>`).join('')}</div>
+<div class="cl"><div class="h3">Університети-партнери</div><div>${PARTNERS.map(x=>`<div class="prt"><b>${x.n} · ${x.c}</b><span>${x.p}</span></div>`).join('')}</div></div>
+<div class="cl gap10"><div class="h3">Країни партнерів</div><div class="tags">${COUNTRIES.map(c=>`<span class="tag">${c}</span>`).join('')}</div></div>
+<div class="cl gap8"><div class="h3">Міжнародний офіс</div><div class="sub">Актуальний перелік програм і дедлайни: <a href="mailto:${MOBILITY.email}">${MOBILITY.email}</a></div>
+<a class="doclink" href="${MOBILITY.url}" target="_blank" rel="noopener">Програми мобільності НаУКМА ↗</a></div>
+<div class="foot">
+${S.exchangeApplied?`<span class="pill ok big"><i class="dot"></i>Заявку передано в міжнародний відділ</span>${docLink('#/doc/exchange','Заявка на обмін')}`:'<button class="btn" data-act="sheet" data-arg="exchange">Хочу взяти участь</button>'}
+<div class="small" style="text-align:center">Джерела: ${SOURCES.exchange}. Подання заявки — прототип</div></div>
+</div>`},
+school(){const review=S.bizOffers.filter(o=>o.status==='review').length;const toSign=S.agreements.filter(g=>!g.signs.school).length;
+return schoolPage('home',`<div class="hgroup"><h1 class="h1 m">Дуальна освіта</h1><div class="sub">Кафедра й куратор бачать лише те, що потребує їхнього рішення</div></div>
+<div class="stats">
+<button class="stat" data-go="#/school/offers"><b>${review}</b><span>Пропозицій на погодженні</span></button>
+<button class="stat" data-go="#/school/agreements"><b>${toSign}</b><span>Угод чекають підпису закладу</span></button>
+<button class="stat" data-go="#/school/credit"><b>${S.creditedAt?'Зараховано':S.credit?1:0}</b><span>Запитів на зарахування</span></button>
+</div>
+<div class="cl gap12"><div class="h3">Роль закладу в циклі</div>
+<div class="step on"><span class="num">1</span>Кафедра погоджує, що пропозиція компанії відповідає освітній програмі</div>
+<div class="step on"><span class="num">2</span>Заклад підписує тристоронній договір КЕП</div>
+<div class="step on"><span class="num">3</span>Куратор бачить години, акти й оцінку компанії без паперових щоденників</div>
+<div class="step on"><span class="num">4</span>Куратор зараховує результат, і він потрапляє в ЄДЕБО</div></div>`)},
+'school/offers'(){return schoolPage('offers',`<h1 class="h1 m">Погодження пропозицій</h1>
+<div class="sub">Компанія не зможе показати пропозицію студентам, поки кафедра не підтвердить, що робота відповідає освітній програмі</div>
+<div class="gap12">${S.bizOffers.slice().reverse().map(o=>{const m=mentorById(o.mentor);return `<div class="card offer"><div class="oh"><span class="tile t-blue">Т</span><div><div class="o1">${esc(o.role)} · ${COMPANY.name}</div><div class="o2">${o.spec} · з ${o.course} курсу · ${o.places} місць · ${o.hours} год/тиж${o.paid?' · оплачувана':''}</div></div></div>
+<div class="sub">Наставник від компанії: ${m.name}, ${m.pos}</div>
+${o.status==='approved'?'<span class="pill ok"><i class="dot"></i>Погоджено · студенти бачать у Дії</span>':`<span class="pill warn"><i class="dot"></i>Чекає рішення кафедри</span><button class="btn inl" style="align-self:flex-start" data-act="approveOffer" data-arg="${o.id}">Погодити (КЕП кафедри)</button>`}
+${docLink('#/doc/approval/'+o.id,'Документ погодження')}</div>`}).join('')}</div>`)},
+'school/agreements'(){return schoolPage('agr',`<h1 class="h1 m">Угоди на підпис</h1>
+<div class="sub">Тристоронні договори про дуальну форму. Заклад підписує, коли погоджено індивідуальний план</div>
+<div class="gap12">${S.agreements.slice().reverse().map(g=>{const o=offerById(g.offerId);return `<div class="card offer">
+<div class="oh"><span class="tile t-green">${g.name[0]}</span><div><div class="o1">${g.name}</div><div class="o2">${esc(o.role)} · ${COMPANY.name}</div></div></div>
+${isActive(g)?'<span class="pill ok"><i class="dot"></i>Активна угода</span>':'<span class="pill warn"><i class="dot"></i>Очікує підписів</span>'}
+<div>${signsNeeded(g).map(k=>`<div class="ck slim">${g.signs[k]?`<span class="okdot">${ic.check}</span>`:waitDot}<div class="b"><span>${SIGN_LABELS[k]}</span><span>${signCell(g,k,'school')}</span></div></div>`).join('')}</div>
+${docLink('#/doc/agreement/'+g.id,'Договір')}</div>`}).join('')}</div>`)},
+'school/credit'(){
+const p=pending();const ready=S.credit&&S.actSigned&&S.assessSent&&p.length===0;
+const rows=[['Тристоронній договір','#/doc/agreement/g0',true],
+[`${confirmed()} год підтверджено наставником`,'#/doc/act/'+ACT_MONTH,p.length===0],
+['Акт за вересень підписано компанією (КЕП)','#/doc/act/'+ACT_MONTH,!!S.actSigned],
+['Оцінка семестру від компанії','#/doc/assessment',!!S.assessSent]];
+const missing=[!S.credit&&'запит студента',p.length&&'підтвердження всіх годин',!S.actSigned&&'акт компанії',!S.assessSent&&'оцінка компанії'].filter(Boolean);
+return schoolPage('credit',`<h1 class="h1 m">Зарахування</h1>
+<div class="sub">Куратор бачить повний пакет документів і зараховує дуальну частину програми</div>
+<div class="cl gap12"><div class="oh" style="display:flex;gap:12px;align-items:center"><span class="tile t-green">О</span><div><div class="h3">${OLENA.name}</div><div class="sub">${OLENA.spec} · ${OLENA.course} курс · ${COMPANY.name}</div></div></div>
+${S.credit?'':'<span class="pill neutral">Студент ще не запросив зарахування</span>'}
+<div>${rows.map(([t,h,ok])=>`<div class="ck">${ok?`<span class="okdot">${ic.check}</span>`:waitDot}<div class="b"><span>${t}</span><span>${ok?'готово':'очікує'}</span></div>${docLink(h)}</div>`).join('')}</div>
+${S.creditedAt?`<span class="pill ok big"><i class="dot"></i>Зараховано · передано в ЄДЕБО</span>${docLink('#/doc/credit','Витяг для зарахування')}`:
+`<button class="btn inl" style="align-self:flex-start" data-act="creditDo" ${ready?'':'disabled'}>Зарахувати (КЕП куратора)</button>${ready?'':`<div class="small">Для зарахування бракує: ${missing.join(', ')}</div>`}`}
+</div>`)},
+biz(){const active=S.agreements.filter(isActive).length;const newApps=S.apps.filter(a=>a.status==='new').length;const ph=pending().reduce((a,e)=>a+e.hours,0);
+return bizPage('home',`<div class="hgroup"><h1 class="h1 m">Дуальна освіта</h1><div class="sub">Дані компанії з ЄДР: ${COMPANY.kved}. Підписант: ${COMPANY.signer}</div></div>
+<div class="stats">
+<button class="stat" data-go="#/biz/agreements"><b>${active}</b><span>Студентів за активними угодами</span></button>
+<button class="stat" data-go="#/biz/apps"><b>${newApps}</b><span>Нових заявок</span></button>
+<button class="stat" data-go="#/biz/hours"><b>${ph} год</b><span>Чекають підтвердження наставника</span></button>
+<button class="stat" data-go="#/biz/hours"><b>${S.actSigned?'Підписано':'Не підписано'}</b><span>Акт за вересень</span></button>
+</div>
+<div class="cl gap12"><div class="h3">Як це працює</div>
+<div class="step on"><span class="num">1</span>Ви публікуєте пропозицію, кафедра погоджує, що вона відповідає освітній програмі</div>
+<div class="step on"><span class="num">2</span>Студенти подають заявки з Дії, ви бачите лише їхній профіль з ЄДЕБО</div>
+<div class="step on"><span class="num">3</span>Угоду підписують усі сторони: КЕП і Дія.Підпис</div>
+<div class="step on"><span class="num">4</span>Наставник підтверджує години у своїй Дії, ви раз на місяць підписуєте акт</div>
+<div class="step on"><span class="num">5</span>Наприкінці семестру ви оцінюєте результат, заклад зараховує</div></div>`)},
+'biz/offers'(){return bizPage('offers',`<div class="row" style="justify-content:space-between"><h1 class="h1 m">Пропозиції</h1><button class="btn inl" data-go="#/biz/new">Створити пропозицію</button></div>
+<div class="gap12">${S.bizOffers.map(o=>{const m=mentorById(o.mentor);return `<div class="card offer"><div class="oh"><span class="tile t-blue">Т</span><div><div class="o1">${esc(o.role)}</div><div class="o2">${o.spec} · з ${o.course} курсу · ${o.places} місць · ${o.hours} год/тиж${o.paid?' · оплачувана':''}</div></div></div>
+<div class="sub">Наставник: ${m.name}, ${m.pos}</div>
+${o.status==='approved'?'<span class="pill ok"><i class="dot"></i>Погоджено кафедрою · студенти бачать у Дії</span>':'<span class="pill warn"><i class="dot"></i>На погодженні кафедри · кафедра бачить її у своєму кабінеті</span>'}
+${docLink('#/doc/approval/'+o.id,'Погодження кафедри')}</div>`}).join('')}</div>
+<div class="small">Кафедра перевіряє, що робота відповідає освітній програмі, інакше години не можна буде зарахувати</div>`)},
+'biz/new'(){return bizPage('offers',`<div class="head">${back('#/biz/offers')}<h1 class="h1 m">Нова пропозиція</h1></div>
+<div class="cl gap14" style="max-width:560px">
+<div class="field"><label for="n-role">Посада</label><input id="n-role" type="text" maxlength="60" placeholder="Наприклад, QA-стажер"></div>
+<div class="field"><label for="n-spec">Спеціальність</label><select id="n-spec">${SPECS.map((x,i)=>`<option value="${i}">${x}</option>`).join('')}</select></div>
+<div class="field"><label for="n-course">З якого курсу</label><select id="n-course">${[1,2,3,4].map(c=>`<option ${c===2?'selected':''}>${c}</option>`).join('')}</select></div>
+<div class="field"><label for="n-places">Місць</label><input id="n-places" type="number" min="1" max="50" value="2"></div>
+<div class="field"><label for="n-hours">Годин на тиждень</label><input id="n-hours" type="number" min="4" max="30" value="16"></div>
+<label class="chk"><input id="n-paid" type="checkbox" checked>Оплачувана</label>
+<div class="field"><label for="n-mentor">Наставник (працівник, знайдений за РНОКПП)</label><select id="n-mentor">${MENTORS.map(m=>`<option value="${m.id}">${m.name} — ${m.pos}</option>`).join('')}</select></div>
+<div class="err" id="n-err" role="alert"></div>
+<button class="btn" data-act="createOffer">Надіслати на погодження кафедрі</button>
+<div class="small">Наставник отримає в Дії запит на призначення</div></div>`)},
+'biz/apps'(){return bizPage('apps',`<h1 class="h1 m">Заявки</h1>
+<div class="sub">Разом із заявкою ви автоматично отримуєте підтвердження навчання з ЄДЕБО — паперова довідка з деканату не потрібна. Співбесіду проводите як звичайно</div>
+<div class="card" style="padding:8px 16px;overflow-x:auto"><table class="tbl"><thead><tr><th>Студент</th><th>Заклад і спеціальність</th><th>Пропозиція</th><th>Рішення</th></tr></thead><tbody>
+${S.apps.map(a=>`<tr><td><b>${a.name}</b>${a.minor?'<div class="small">до 18 років</div>':''}</td><td>${a.school}<div class="small">${a.spec} · ${a.course} курс</div><span class="pill ok" style="margin-top:6px"><i class="dot"></i>Навчання підтверджено ЄДЕБО</span><div style="margin-top:6px">${docLink('#/doc/enrollment/'+a.id,'Підтвердження')}</div></td><td>${esc(offerById(a.offerId).role)}</td><td>${a.status==='new'?`<div class="row"><button class="btn inl" data-act="acceptApp" data-arg="${a.id}">Прийняти</button><button class="btn2 inl" data-act="rejectApp" data-arg="${a.id}">Відхилити</button></div>`:a.status==='accepted'?'<span class="pill ok"><i class="dot"></i>Прийнято</span>'+docLink('#/doc/agreement/'+agreementOfApp(a.id).id,'Договір'):'<span class="pill neutral">Відхилено</span>'}</td></tr>`).join('')}
+</tbody></table></div>`)},
+'biz/agreements'(){return bizPage('agr',`<h1 class="h1 m">Угоди</h1>
+<div class="sub">Тристоронній договір про дуальну форму. Дані сторін підставлено з ЄДЕБО та ЄДР, індивідуальний план погоджує куратор</div>
+<div class="gap12">${S.agreements.slice().reverse().map(g=>{const o=offerById(g.offerId);return `<div class="card offer">
+<div class="oh"><span class="tile t-green">${g.name[0]}</span><div><div class="o1">${g.name}</div><div class="o2">${esc(o.role)} · наставник ${mentorById(o.mentor).name}</div></div></div>
+${isActive(g)?'<span class="pill ok"><i class="dot"></i>Активна угода</span>':'<span class="pill warn"><i class="dot"></i>Очікує підписів</span>'}
+<div>${signsNeeded(g).map(k=>`<div class="ck slim">${g.signs[k]?`<span class="okdot">${ic.check}</span>`:waitDot}<div class="b"><span>${SIGN_LABELS[k]}</span><span>${signCell(g,k)}</span></div></div>`).join('')}</div>
+${g.minor?'<div class="small">Студентові менше 18 років, тому угоду також підписує законний представник у своїй Дії</div>':''}
+${docLink('#/doc/agreement/'+g.id,'Договір')}
+</div>`}).join('')}</div>`)},
+'biz/hours'(){const c=confirmed();const ph=pending().reduce((a,e)=>a+e.hours,0);return bizPage('hours',`<h1 class="h1 m">Години й акти</h1>
+<div class="sub">Години підтверджують наставники у своїй Дії. Раз на місяць ви підписуєте один акт на всіх студентів</div>
+<div class="card" style="padding:8px 16px;overflow-x:auto"><table class="tbl"><thead><tr><th>Студент</th><th>Наставник</th><th>Підтверджено</th><th>Чекає наставника</th></tr></thead><tbody>
+<tr><td><b>${OLENA.name}</b><div class="small">Молодший розробник</div></td><td>${MENTORS[0].name}</td><td>${c} год</td><td>${ph?`${ph} год`:'—'}</td></tr>
+</tbody></table></div>
+<div class="cl gap12"><div class="h3">Що бачить наставник у своїй Дії</div>
+<div class="sub">${MENTORS[0].name} — працівник компанії. Він отримує сповіщення про кожен запис студента й підтверджує одним натиском у застосунку Дія. У демо підтвердити можна тут</div>
+${pending().length?pending().map(e=>`<div class="push"><div class="pt"><span>Дія · Дуальна освіта</span><span>${fmt(e.createdAt)}</span></div>
+<div><div class="h3">${OLENA.name}: ${e.hours} год</div><div class="sub">${esc(e.title)}</div></div>
+${e.q?'<span class="pill warn"><i class="dot"></i>Наставник попросив уточнити</span>':''}
+<div class="row"><button class="btn inl" data-act="mentorOk" data-arg="${e.id}">Підтвердити</button><button class="btn2 inl" data-act="mentorAsk" data-arg="${e.id}">Уточнити</button></div></div>`).join(''):'<div class="sub">Нових записів немає</div>'}</div>
+<div class="cl gap12"><div class="h3">Акт за вересень 2026</div>
+<div><div class="kv"><span>Студентів</span><span>1</span></div><div class="kv"><span>Підтверджених годин</span><span>${c}</span></div></div>
+${ph?`<div class="small">${ph} год ще чекають наставника й увійдуть в акт після підтвердження</div>`:''}
+${S.actSigned?'<span class="pill ok"><i class="dot"></i>Підписано КЕП · передано закладу</span>':'<button class="btn inl" style="align-self:flex-start" data-act="signAct">Підписати акт КЕП</button>'}
+${docLink('#/doc/act/'+ACT_MONTH,'Акт за вересень')}</div>`)},
+'biz/assess'(){return bizPage('assess',`<h1 class="h1 m">Оцінка семестру</h1>
+<div class="sub">${OLENA.name} · результати навчання з індивідуального плану. Оцінка йде куратору разом із годинами й актами</div>
+${S.assessSent?`<div class="cl gap10"><span class="pill ok"><i class="dot"></i>Надіслано куратору</span>${docLink('#/doc/assessment','Документ оцінки')}<div>${OUTCOMES.map((t,i)=>`<div class="kv"><span>${t}</span><span>${GRADES[S.assess[i]]}</span></div>`).join('')}</div></div>`:
+`<div class="gap12">${OUTCOMES.map((t,i)=>`<div class="cl gap10"><div class="h3" id="o-${i}">${t}</div><div class="chips" role="radiogroup" aria-labelledby="o-${i}">${GRADES.map((g,j)=>`<button class="chip ${S.assess[i]===j?'on':''}" role="radio" aria-checked="${S.assess[i]===j}" data-act="grade" data-arg="${i}:${j}">${g}</button>`).join('')}</div></div>`).join('')}</div>
+<div class="err" role="alert">${S.assessErr}</div>
+<button class="btn" style="max-width:360px" data-act="sendAssess">Надіслати куратору</button>`}`)},
+};
+
+function sheetHtml(){
+const s=S.sheet;if(!s)return '';
+let body='';
+if(s.type==='cat'){
+body=`<div class="h3">Підстава для стипендії</div><div class="gap8">${CATS.map((c,i)=>`<button class="opt ${i===S.cat?'on':''}" data-act="pickCat" data-arg="${i}" role="radio" aria-checked="${i===S.cat}">${c.t}</button>`).join('')}</div>`;
+}else if(s.type==='apply'){
+const o=studentOffers().find(x=>x.id===s.id);if(!o)throw new Error('Пропозицію не знайдено: '+s.id);
+body=`<div class="h3">Надіслати заявку до «${o.name}»?</div><div class="sub">Компанія автоматично отримає підтвердження навчання з ЄДЕБО — довідку з деканату нести не потрібно. Договір буде підписано через Дія.Підпис після погодження.</div><button class="btn" data-act="sendApply">Надіслати</button><button class="btn2" style="background:var(--chip)" data-act="close">Скасувати</button>`;
+}else if(s.type==='exchange'){
+body=`<div class="h3">Передати заявку в міжнародний відділ?</div><div class="sub">Відділ побачить ваш профіль з ЄДЕБО: університет, спеціальність і курс. Документи для конкурсу завантажувати не потрібно.</div><button class="btn" data-act="sendExchange">Надіслати заявку</button><button class="btn2" style="background:var(--chip)" data-act="close">Скасувати</button>`;
+}else if(s.type==='entry'){
+body=`<div class="h3">Новий запис у журналі</div>
+<div class="field"><label for="f-title">Що зроблено</label><input id="f-title" type="text" maxlength="80" placeholder="Наприклад, код-рев'ю модуля"></div>
+<div class="field"><label for="f-hours">Години</label><input id="f-hours" type="number" min="1" max="24" inputmode="numeric" placeholder="1–24"></div>
+<div class="err" id="f-err" role="alert"></div>
+<button class="btn" data-act="saveEntry">Зберегти запис</button><button class="btn2" style="background:var(--chip)" data-act="close">Скасувати</button>`;
+}
+return `<div class="overlay" data-backdrop="1"><div class="sheet" role="dialog" aria-modal="true">${body}</div></div>`;
+}
+
+function route(){return (location.hash||'#/services').replace('#/','')||'services'}
+function render(){
+const r=route();const isDoc=r.startsWith('doc/');const fn=r==='demo'?demoHtml:isDoc?()=>docView(r.slice(4)):(R[r]||R.services);
+try{app.innerHTML=fn()}catch(err){
+// Помилку видно на екрані й у консолі — жодних «мовчазних» порожніх станів
+console.error(err);
+app.innerHTML=`<div class="screen"><div class="head">${back(S.last)}<h1 class="h1 m">Щось пішло не так</h1></div><div class="cl gap8" role="alert"><div class="h3">${esc(err.message)}</div><div class="sub">Поверніться назад і спробуйте ще раз</div></div></div>`;
+}
+document.getElementById('roles').innerHTML=rolesHtml(r);
+const org=x=>x.startsWith('biz')||x.startsWith('school');
+app.classList.toggle('wide',org(r)||(isDoc&&org(S.last.slice(2))));
+app.classList.toggle('full',r==='demo');
+layer.innerHTML=sheetHtml();
+if(!isDoc&&r!=='demo')S.last='#/'+(R[r]?r:'services');
+document.body.style.overflow=S.sheet?'hidden':'';
+if(S.sheet&&S.sheet.type==='entry'){const i=document.getElementById('f-title');if(i)i.focus()}
+if(r!=='demo')save();
+}
+function act(a,arg,el){
+switch(a){
+case 'rcp':S.rcp=+arg;render();break;
+case 'sheet':S.sheet={type:arg,id:el.dataset.id};render();break;
+case 'close':S.sheet=null;render();break;
+case 'pickCat':S.cat=+arg;S.sheet=null;render();break;
+case 'submit':if(!S.consent)return;S.submitted=true;S.submittedAt=nowIso();render();window.scrollTo(0,0);toast('Заяву подано');break;
+case 'cancelApp':S.submitted=false;render();toast('Заяву скасовано');break;
+case 'dualTab':S.dualTab=+arg;render();break;
+case 'sendApply':{const id=S.sheet.id;if(!S.applied.includes(id)){S.applied.push(id);const bo=S.bizOffers.find(o=>o.id===id);if(bo){S.apps.push({id:'o-'+id,offerId:id,name:OLENA.name,school:OLENA.school,spec:OLENA.spec,course:OLENA.course,minor:false,status:'new',self:true,createdAt:nowIso()});notify('biz',`Нова заявка від ${OLENA.name} на «${bo.role}»`)}}S.sheet=null;render();toast('Заявку надіслано компанії');break}
+case 'saveEntry':{
+const t=document.getElementById('f-title').value.trim();
+const h=parseInt(document.getElementById('f-hours').value,10);
+const er=document.getElementById('f-err');
+if(!t){er.textContent='Опишіть, що ви зробили';return}
+if(!(h>=1&&h<=24)){er.textContent='Вкажіть кількість годин від 1 до 24';return}
+S.entries.push({id:S.nextId++,title:t,hours:h,ok:false,createdAt:nowIso()});notify('biz',`${OLENA.name} додала запис у журнал: ${h} год`);S.sheet=null;render();toast('Запис додано, очікує наставника');break}
+case 'mentorOk':{const e=S.entries.find(x=>x.id===+arg);if(!e)throw new Error('Запис не знайдено: '+arg);e.ok=true;e.q=false;e.confirmedAt=nowIso();notify('student',`Наставник підтвердив ${e.hours} год`);render();toast('Години підтверджено — студент і компанія це бачать');break}
+case 'mentorAsk':{const e=S.entries.find(x=>x.id===+arg);if(!e)throw new Error('Запис не знайдено: '+arg);e.q=true;notify('student','Наставник просить уточнити запис у журналі');render();toast('Студенту надіслано запит на уточнення');break}
+case 'createOffer':{
+const role=document.getElementById('n-role').value.trim();
+const places=parseInt(document.getElementById('n-places').value,10);
+const hours=parseInt(document.getElementById('n-hours').value,10);
+const er=document.getElementById('n-err');
+if(!role){er.textContent='Вкажіть посаду';return}
+if(!(places>=1&&places<=50)){er.textContent='Кількість місць — від 1 до 50';return}
+if(!(hours>=4&&hours<=30)){er.textContent='Годин на тиждень — від 4 до 30';return}
+S.bizOffers.push({id:'ts-'+S.nextId++,role,spec:SPECS[+document.getElementById('n-spec').value],course:+document.getElementById('n-course').value,places,hours,paid:document.getElementById('n-paid').checked,mentor:document.getElementById('n-mentor').value,status:'review',createdAt:nowIso()});notify('school',`${COMPANY.name} надіслала пропозицію «${role}» на погодження`);
+location.hash='#/biz/offers';toast('Пропозицію надіслано на погодження кафедрі');break}
+case 'approveOffer':{const o=S.bizOffers.find(x=>x.id===arg);if(!o)throw new Error('Пропозицію не знайдено: '+arg);o.status='approved';o.approvedAt=nowIso();notify('biz',`Кафедра погодила пропозицію «${o.role}»`);notify('student',`Нова пропозиція для вашої спеціальності: ${o.role}`);render();toast('Кафедра погодила — пропозиція вже в Дії студентів');break}
+case 'acceptApp':{const a=S.apps.find(x=>x.id===arg);if(!a)throw new Error('Заявку не знайдено: '+arg);a.status='accepted';if(a.self)notify('student',`${COMPANY.name} прийняла вашу заявку — підпишіть угоду`);notify('school',`Нова угода з ${a.name} чекає підпису закладу`);
+S.agreements.push({id:'g'+S.nextId++,appId:a.id,name:a.name,school:a.school,offerId:a.offerId,minor:a.minor,self:!!a.self,signs:{student:false,parent:false,company:false,school:false}});
+location.hash='#/biz/agreements';toast('Угоду сформовано з даних ЄДЕБО та ЄДР');break}
+case 'rejectApp':{const a=S.apps.find(x=>x.id===arg);if(!a)throw new Error('Заявку не знайдено: '+arg);a.status='rejected';if(a.self)notify('student',`${COMPANY.name} відхилила вашу заявку`);render();toast('Заявку відхилено, студент побачить це в Дії');break}
+case 'sign':{const [id,k]=arg.split(':');const g=S.agreements.find(x=>x.id===id);if(!g)throw new Error('Угоду не знайдено: '+id);g.signs[k]=nowIso();if(k==='company'){if(g.self)notify('student',`${COMPANY.name} підписала угоду КЕП`);notify('school',`${COMPANY.name} підписала угоду з ${g.name}`)}if(k==='school'){if(g.self)notify('student','Заклад освіти підписав угоду');notify('biz',`Заклад підписав угоду з ${g.name}`)}render();toast(isActive(g)?'Усі сторони підписали — угода активна':'Підпис додано');break}
+case 'signSelf':{const g=S.agreements.find(x=>x.id===arg);if(!g)throw new Error('Угоду не знайдено: '+arg);g.signs.student=nowIso();notify('biz',`${g.name} підписала угоду Дія.Підписом`);notify('school',`${g.name} підписала угоду Дія.Підписом`);render();toast(isActive(g)?'Угода активна':'Підписано Дія.Підписом — чекаємо компанію й заклад');break}
+case 'signAct':S.actSigned=nowIso();notify('school',`${COMPANY.name} підписала акт за вересень`);render();toast('Акт підписано — заклад бачить підтверджені години');break;
+case 'grade':{const [i,j]=arg.split(':').map(Number);S.assess[i]=j;S.assessErr='';render();break}
+case 'sendAssess':if(S.assess.some(x=>x===null)){S.assessErr='Оцініть усі результати навчання';render();return}S.assessSent=nowIso();notify('school',`${COMPANY.name} надіслала оцінку семестру`);render();toast('Оцінку надіслано куратору');break;
+case 'sendExchange':S.exchangeApplied=nowIso();S.sheet=null;render();toast('Заявку передано в міжнародний відділ (прототип)');break;
+case 'demoCycle':startDemoCycle();break;
+case 'shareDual':S.rcp=EMPLOYER_RCP;location.hash='#/certificate';break;
+case 'creditDo':S.creditedAt=nowIso();notify('student','Куратор зарахував дуальну частину — результат уже в ЄДЕБО');render();toast('Зараховано, результат передано в ЄДЕБО');break;
+case 'credit':S.credit=true;S.creditAt=nowIso();notify('school',`${OLENA.name} просить зарахувати дуальну частину`);render();toast('Запит на зарахування надіслано куратору');break;
+case 'share':toast('Посилання на перевірку скопійовано (прототип)');break;
+case 'stub':toast('У прототипі відкривається лише ЄУніверситет');break;
+case 'theme':document.documentElement.dataset.theme=isDark()?'light':'dark';render();break;
+}
+}
+document.addEventListener('click',e=>{
+if(e.target.matches('[data-backdrop]')){S.sheet=null;render();return}
+const g=e.target.closest('[data-go]');
+if(g){e.preventDefault();location.hash=g.dataset.go;return}
+const a=e.target.closest('[data-act]');
+if(a)act(a.dataset.act,a.dataset.arg,a);
+});
+document.addEventListener('change',e=>{if(e.target.id==='consent'){S.consent=e.target.checked;render()}});
+document.addEventListener('input',e=>{
+if(e.target.id==='q'){
+const v=e.target.value.trim().toLowerCase();let n=0;
+document.querySelectorAll('[data-search]').forEach(el=>{const m=!v||el.dataset.search.includes(v);el.style.display=m?'':'none';if(m)n++});
+document.getElementById('nores').style.display=n?'none':'block';
+}
+if(e.target.closest('.sheet')){const er=document.getElementById('f-err');if(er)er.textContent=''}
+});
+document.addEventListener('keydown',e=>{
+if(e.key!=='Escape')return;
+if(S.sheet){S.sheet=null;render()}else if(route().startsWith('doc/')){location.hash=S.last}
+});
+window.addEventListener('hashchange',()=>{S.sheet=null;window.scrollTo(0,0);render()});
+if(!location.hash)history.replaceState(null,'','#/services');
+load();
+render();
+</script>
+</body>
+</html>
